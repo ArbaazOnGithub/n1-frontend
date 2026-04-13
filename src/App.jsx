@@ -12,6 +12,7 @@ import Services from "./Components/ui/Admin/Services/Services";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import AdminLayout from "./Components/ui/AdminLayout";
 import CustomerDashboard from "./Pages/CustomerDashboard";
+import ServiceDetailPage from "./Pages/ServiceDetailPage";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "./Components/AuthContext"; // Import AuthProvider
 import "./App.css";
@@ -28,6 +29,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<SignUp />} />
+          <Route path="/services/:slug" element={<ServiceDetailPage />} />
           <Route path="/my-orders" element={
             <ProtectedRoute role="ROLE_USER">
               <CustomerDashboard />
