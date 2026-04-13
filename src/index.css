@@ -1,0 +1,70 @@
+@import "tailwindcss";
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+@layer base {
+  :root {
+    --primary: 15, 23, 42; /* Slate 900 */
+    --accent: 59, 130, 246; /* Blue 500 */
+    --secondary: 139, 92, 246; /* Violet 500 */
+    --glass: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.2);
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900 font-sans antialiased;
+    background-image: radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.05) 0, transparent 50%),
+                      radial-gradient(at 50% 0%, rgba(139, 92, 246, 0.05) 0, transparent 50%);
+    background-attachment: fixed;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-lg border border-white/20 shadow-xl;
+  }
+  
+  .glass-card-dark {
+    @apply bg-slate-900/80 backdrop-blur-lg border border-slate-700/30 shadow-2xl;
+  }
+
+  .premium-button {
+    @apply px-6 py-2 rounded-full font-semibold transition-all duration-300
+           bg-gradient-to-r from-blue-600 to-violet-600 text-white
+           hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5
+           active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .premium-button-outline {
+    @apply px-6 py-2 rounded-full font-semibold transition-all duration-300
+           border-2 border-blue-600 text-blue-600 bg-transparent
+           hover:bg-blue-50 hover:shadow-md active:scale-95;
+  }
+
+  .service-hover-card {
+    @apply transition-all duration-500 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/10;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full hover:bg-slate-400 transition-colors;
+}
+
+/* Animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
