@@ -1,21 +1,30 @@
 // src/App.js
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavBar from "./Components/NavBar";
-import Home from "./Components/Home";
-import Login from "./Components/Authorization/Login";
-import SignUp from "./Components/Authorization/SignUp";
-import DashboardSummary from "./Components/ui/Admin/Dashboard/DashboardSummary";
-import Orders from "./Components/ui/Admin/Orders/RecentOrdersTable";
-import Users from "./Components/ui/Admin/Users/Users";
-import Services from "./Components/ui/Admin/Services/Services";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import AdminLayout from "./Components/ui/AdminLayout";
-import CustomerDashboard from "./Pages/CustomerDashboard";
-import ServiceDetailPage from "./Pages/ServiceDetailPage";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "./Components/AuthContext"; // Import AuthProvider
 import "./App.css";
+
+// Lazy Loaded Components
+const Home = lazy(() => import("./Components/Home"));
+const Login = lazy(() => import("./Components/Authorization/Login"));
+const SignUp = lazy(() => import("./Components/Authorization/SignUp"));
+const DashboardSummary = lazy(() => import("./Components/ui/Admin/Dashboard/DashboardSummary"));
+const Orders = lazy(() => import("./Components/ui/Admin/Orders/RecentOrdersTable"));
+const Users = lazy(() => import("./Components/ui/Admin/Users/Users"));
+const Services = lazy(() => import("./Components/ui/Admin/Services/Services"));
+const AdminLayout = lazy(() => import("./Components/ui/AdminLayout"));
+const CustomerDashboard = lazy(() => import("./Pages/CustomerDashboard"));
+const ServiceDetailPage = lazy(() => import("./Pages/ServiceDetailPage"));
+const NotFoundPage = lazy(() => import("./Pages/NotFoundPage"));
+
+const SpinnerFallback = () => (
+  <div className="flex justify-center items-center h-screen w-full">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+  </div>
+);
 
 function App() {
   return (
@@ -25,31 +34,35 @@ function App() {
           <ToastContainer />
         </div>
         <NavBar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<SignUp />} />
-          <Route path="/services/:slug" element={<ServiceDetailPage />} />
-          <Route path="/my-orders" element={
-            <ProtectedRoute role="ROLE_USER">
-              <CustomerDashboard />
-            </ProtectedRoute>
-          } />
-          <Route
-            path="/admin"
-            element={
-              <ProtectedRoute role="ROLE_ADMIN">
-                <AdminLayout />
+        <Suspense fallback={<SpinnerFallback />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<SignUp />} />
+            <Route path="/services/:slug" element={<ServiceDetailPage />} />
+            <Route path="/my-orders" element={
+              <ProtectedRoute role="ROLE_USER">
+                <CustomerDashboard />
               </ProtectedRoute>
-            }
-          >
-            {/* Nested routes under /admin */}
-            <Route index element={<DashboardSummary />} /> {/* Default route for /admin */}
-            <Route path="orders" element={<Orders />} />
-            <Route path="users" element={<Users />} />
-            <Route path="services" element={<Services />} />
-          </Route>
-        </Routes>
+            } />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute role="ROLE_ADMIN">
+                  <AdminLayout />
+                </ProtectedRoute>
+              }
+            >
+              {/* Nested routes under /admin */}
+              <Route index element={<DashboardSummary />} /> {/* Default route for /admin */}
+              <Route path="orders" element={<Orders />} />
+              <Route path="users" element={<Users />} />
+              <Route path="services" element={<Services />} />
+            </Route>
+            {/* 404 Catch-All Route */}
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
       </Router>
     </AuthProvider>
   );

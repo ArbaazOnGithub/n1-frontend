@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import config from "@/config";
 
+import { useAuth } from "./AuthContext";
+
 const StarRating = ({ value, onChange, readOnly = false }) => {
   const [hovered, setHovered] = useState(0);
   return (
@@ -24,12 +26,13 @@ const StarRating = ({ value, onChange, readOnly = false }) => {
 };
 
 const ReviewSection = () => {
+  const { isLoggedIn } = useAuth();
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({ rating: 5, comment: "", serviceName: "" });
   const [submitting, setSubmitting] = useState(false);
-  const isLoggedIn = !!localStorage.getItem("token");
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     fetchReviews();
@@ -162,36 +165,46 @@ const ReviewSection = () => {
             No reviews yet. Be the first to share your experience!
           </p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {reviews.slice(0, 9).map((review) => (
-              <div
-                key={review.id}
-                className="glass-card rounded-2xl p-6 service-hover-card flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-start justify-between mb-3">
-                    <StarRating value={review.rating} readOnly />
-                    <span className="text-xs font-semibold px-2 py-1 rounded-full bg-blue-50 text-blue-600 border border-blue-100">
-                      {review.serviceName}
-                    </span>
-                  </div>
-                  <p className="text-slate-700 text-sm leading-relaxed italic">"{review.comment}"</p>
-                </div>
-                <div className="mt-4 flex items-center gap-3 pt-4 border-t border-slate-100">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-white text-xs font-bold">
-                    {review.user?.name?.charAt(0) || "U"}
-                  </div>
+          <div className="flex flex-col items-center">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+              {reviews.slice(0, showAll ? reviews.length : 9).map((review) => (
+                <div
+                  key={review.id}
+                  className="glass-card rounded-2xl p-6 service-hover-card flex flex-col justify-between"
+                >
                   <div>
-                    <p className="text-sm font-semibold text-slate-800">{review.user?.name || "Customer"}</p>
-                    <p className="text-xs text-slate-400">
-                      {review.createdAt
-                        ? new Date(review.createdAt).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })
-                        : ""}
-                    </p>
+                    <div className="flex items-start justify-between mb-3">
+                      <StarRating value={review.rating} readOnly />
+                      <span className="text-xs font-semibold px-2 py-1 rounded-full bg-blue-50 text-blue-600 border border-blue-100">
+                        {review.serviceName}
+                      </span>
+                    </div>
+                    <p className="text-slate-700 text-sm leading-relaxed italic">"{review.comment}"</p>
+                  </div>
+                  <div className="mt-4 flex items-center gap-3 pt-4 border-t border-slate-100">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 flex items-center justify-center text-white text-xs font-bold">
+                      {review.user?.name?.charAt(0) || "U"}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-slate-800">{review.user?.name || "Customer"}</p>
+                      <p className="text-xs text-slate-400">
+                        {review.createdAt
+                          ? new Date(review.createdAt).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" })
+                          : ""}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            {reviews.length > 9 && (
+              <button
+                onClick={() => setShowAll(!showAll)}
+                className="mt-10 premium-button-outline"
+              >
+                {showAll ? "Show Less" : "Show More (" + (reviews.length - 9) + ")"}
+              </button>
+            )}
           </div>
         )}
       </div>

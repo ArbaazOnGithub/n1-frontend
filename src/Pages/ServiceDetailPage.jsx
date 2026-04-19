@@ -20,19 +20,8 @@ const ServiceDetailPage = () => {
     fetch(`${config.apiUrl}/api/services`)
       .then((r) => r.json())
       .then((services) => {
-        const match = services.find(
-          (s) => s.name.toLowerCase() === service.slug.replace(/-/g, " ").toLowerCase()
-            || s.name.toLowerCase().includes(service.icon)
-        );
-        if (!match) {
-          // Try matching by first word
-          const found = services.find((s) =>
-            slug.split("-").some((word) => s.name.toLowerCase().includes(word))
-          );
-          setBackendService(found || null);
-        } else {
-          setBackendService(match);
-        }
+        const exactMatch = services.find((s) => s.slug === slug || s.name.toLowerCase().replace(/ /g, '-') === slug);
+        setBackendService(exactMatch || null);
       })
       .catch(console.error);
 

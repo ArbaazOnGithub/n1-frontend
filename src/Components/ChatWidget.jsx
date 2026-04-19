@@ -22,20 +22,30 @@ const ChatWidget = () => {
   const autoReplies = {
     "web development":
       "Great choice! Our Web Development service covers both static and dynamic websites. Click the 'Services' section on our homepage to apply!",
-    seo: "We offer professional SEO services to boost your search rankings. Visit the Services section to get started!",
-    price:
-      "Pricing depends on the service and scope. Please fill out the service form and our team will contact you with a custom quote.",
-    contact:
-      "You can reach us at +91 93992 85780, or use the Contact section on the homepage.",
+    "seo": "We offer professional SEO services to boost your search rankings. Visit the Services section to get started!",
+    "price":
+      "Pricing depends on the service and scope. Please fill out the service form or contact us for a custom quote tailored to your needs.",
+    "pricing":
+      "Our services are competitively priced. For specific rates on Web Dev or SEO, please check our Services details or drop us a message via the form.",
+    "contact":
+      "You can reach us at +91 93992 85780, or use the Contact section on the homepage to send an email.",
     "google ads":
       "We manage Google Ads campaigns to maximize your ROI. Apply via the Services section!",
     "logo design":
       "Our designers create stunning logos that represent your brand. Check out the Services section to apply.",
-    hosting:
+    "hosting":
       "We offer reliable web hosting solutions. Visit the Services section to learn more.",
     "data entry":
       "We provide accurate and fast data entry services. Browse our Services section for details.",
-    default:
+    "time": 
+      "Project timelines vary. Small projects usually take 1-2 weeks, while complex ones might take 4-6 weeks.",
+    "duration":
+      "Typically, basic site setup takes about a week. Complex applications with backends take longer. Let's discuss your specific needs!",
+    "location":
+      "We are based in India but serve clients globally with digital solutions.",
+    "help":
+      "I can help with information about our Services, Pricing, Timelines, and Contact info. What would you like to know more about?",
+    "default":
       "Thanks for your message! Our team will get back to you shortly. For urgent queries, call us at +91 93992 85780.",
   };
 
