@@ -64,6 +64,25 @@ const RecentOrdersTable = () => {
     }
   };
 
+  const handleStatusChange = async (orderId, newStatus) => {
+    try {
+      const response = await fetch(`${config.apiUrl}/api/orders/${orderId}/update-status?status=${newStatus}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (!response.ok) throw new Error("Failed to update status");
+      
+      // Update local state
+      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: newStatus } : o));
+      toast.success(`Order #${orderId} set to ${newStatus}`);
+    } catch (error) {
+      toast.error(`Error: ${error.message}`);
+    }
+  };
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', {
