@@ -1,6 +1,6 @@
 // src/pages/AdminDashboard.jsx
 import React, { useState, useEffect } from 'react';
-import AdminLayout from '@/components/ui/AdminLayout';
+import AdminLayout from '@/Components/ui/AdminLayout';
 import AdminNavbar from '../Components/ui/Admin/AdminNavbar';
 
 const AdminDashboard = () => {
