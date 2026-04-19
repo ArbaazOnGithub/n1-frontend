@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import ServiceForm from "../Forms/ServiceForm";
-import ReviewSection from "../ReviewSection";
+import ServiceForm from "./Forms/ServiceForm";
+import ReviewSection from "./ReviewSection";
 import { useState } from "react";
 
 // Static rich content for each service keyed by service name
