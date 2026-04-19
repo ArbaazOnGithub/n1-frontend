@@ -14,18 +14,31 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="w-60 bg-gray-200 dark:bg-gray-800 p-4">
-      <h2 className="text-xl font-semibold mb-4 !text-gray-100">Admin Panel</h2>
-      <nav>
-        {navItems.map((item) => (
-          <div key={item.to} className="mb-2">
-            <Link to={item.to} className="w-full">
-              <Button variant={location.pathname === item.to ? 'Ghost' : 'outline'} className="w-full justify-start rounded">
-                {item.label}
-              </Button>
-            </Link>
-          </div>
-        ))}
+    <aside className="w-64 bg-slate-900 min-h-screen p-6 shadow-2xl border-r border-slate-800">
+      <div className="mb-10">
+        <h2 className="text-xs font-bold text-slate-500 uppercase tracking-[0.2em]">Administration</h2>
+        <div className="h-1 w-8 bg-blue-600 mt-2 rounded-full"></div>
+      </div>
+      <nav className="space-y-4">
+        {navItems.map((item) => {
+          const isActive = location.pathname === item.to;
+          return (
+            <div key={item.to}>
+              <Link to={item.to} className="group">
+                <Button 
+                  variant={isActive ? "default" : "ghost"} 
+                  className={`w-full justify-start rounded-xl px-4 py-6 transition-all duration-300 ${
+                    isActive 
+                      ? "bg-blue-600 text-white shadow-lg shadow-blue-900/20" 
+                      : "text-slate-400 hover:text-white hover:bg-slate-800"
+                  }`}
+                >
+                  <span className="font-semibold">{item.label}</span>
+                </Button>
+              </Link>
+            </div>
+          );
+        })}
       </nav>
     </aside>
   );

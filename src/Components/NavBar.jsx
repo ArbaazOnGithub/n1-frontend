@@ -142,57 +142,77 @@ const NavBar = () => {
           </div>
 
           {/* Mobile Menu */}
-          {isOpen && !isAdminDashboard && (
-            <div className="sm:hidden">
-
-              <button
-                onClick={() => scrollToSection("services")}
-                className="block text-gray-700 hover:text-blue-900 font-medium px-4 py-2"
-              >
-                Services
-              </button>
-              <button
-                onClick={() => scrollToSection("apply")}
-                className="block text-gray-700 hover:text-blue-900 font-medium px-4 py-2"
-              >
-                How To Apply?
-              </button>
-              <button
-                onClick={() => { toggleMenu(); scrollToSection("contact"); }}
-                className="block w-full text-left text-gray-700 hover:text-blue-900 font-medium px-4 py-2"
-              >
-                Contacts
-              </button>
-
-              <div className="border-t border-gray-200 my-2"></div>
-              {isLoggedIn ? (
+          {isOpen && (
+            <div className="sm:hidden bg-white border-t border-gray-100 pb-4 shadow-inner">
+              {!isAdminDashboard ? (
                 <>
                   <button
-                    onClick={() => { toggleMenu(); navigate("/my-orders"); }}
-                    className="block w-full text-left text-gray-700 hover:text-blue-900 font-medium px-4 py-2"
+                    onClick={() => { toggleMenu(); scrollToSection("services"); }}
+                    className="block w-full text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium px-6 py-3 transition-colors"
                   >
-                    My Orders
+                    Services
                   </button>
-                  <div className="px-4 py-2 flex w-full">
-                    <LogoutButton />
-                  </div>
+                  <button
+                    onClick={() => { toggleMenu(); scrollToSection("apply"); }}
+                    className="block w-full text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium px-6 py-3 transition-colors"
+                  >
+                    How To Apply?
+                  </button>
+                  <button
+                    onClick={() => { toggleMenu(); scrollToSection("contact"); }}
+                    className="block w-full text-left text-gray-700 hover:bg-blue-50 hover:text-blue-600 font-medium px-6 py-3 transition-colors"
+                  >
+                    Contacts
+                  </button>
                 </>
               ) : (
-                <>
-                  <button
-                    onClick={() => { toggleMenu(); openLoginModal(); }}
-                    className="block w-full text-left text-gray-700 hover:text-blue-900 font-medium px-4 py-2"
-                  >
-                    Login
-                  </button>
-                  <button
-                    onClick={() => { toggleMenu(); openSignupModal(); }}
-                    className="block w-full text-left text-blue-600 hover:text-blue-900 font-bold px-4 py-2"
-                  >
-                    Register
-                  </button>
-                </>
+                <div className="px-6 py-4 border-b border-gray-100 bg-slate-50">
+                   <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Admin Mode</p>
+                   <p className="text-sm font-medium text-slate-700 truncate">{user?.email}</p>
+                </div>
               )}
+
+              <div className="px-6 pt-4 space-y-3">
+                {isLoggedIn && user?.role === "ROLE_ADMIN" && (
+                  <button
+                    className="w-full rounded-xl py-3 px-4 bg-green-500 text-white font-bold shadow-lg shadow-green-200 active:scale-95 transition-all text-center"
+                    onClick={() => { toggleMenu(); handleToggleDashboard(); }}
+                  >
+                    {isAdminDashboard ? "Go to Main Site" : "Open Admin Panel"}
+                  </button>
+                )}
+
+                {isLoggedIn ? (
+                  <>
+                    {!isAdminDashboard && (
+                      <button
+                        onClick={() => { toggleMenu(); navigate("/my-orders"); }}
+                        className="w-full text-center py-3 px-4 text-slate-700 font-bold hover:bg-slate-50 rounded-xl transition-colors"
+                      >
+                        My Orders
+                      </button>
+                    )}
+                    <div className="flex justify-center pt-2">
+                       <LogoutButton />
+                    </div>
+                  </>
+                ) : (
+                  <div className="space-y-3">
+                    <button
+                      onClick={() => { toggleMenu(); openLoginModal(); }}
+                      className="w-full py-3 px-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-100 active:scale-95 transition-all"
+                    >
+                      Login
+                    </button>
+                    <button
+                      onClick={() => { toggleMenu(); openSignupModal(); }}
+                      className="w-full py-3 px-4 bg-white text-blue-600 border-2 border-blue-600 font-bold rounded-xl active:scale-95 transition-all"
+                    >
+                      Register
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           )}
         </div>
