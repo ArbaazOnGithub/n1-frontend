@@ -1,5 +1,5 @@
 const config = {
-    apiUrl: "http://localhost:8080", // Replace with your API URL
+    apiUrl: import.meta.env.VITE_API_URL || "http://localhost:8080", // Uses Vercel environment variable in production
 };
 
 export default config;

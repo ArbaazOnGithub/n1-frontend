@@ -36,8 +36,7 @@
     "swiper": "^11.2.2",
     "tailwind-merge": "^3.0.2",
     "tailwindcss": "^4.0.3",
-    "tailwindcss-animate": "^1.0.7",
-    "team-web-app": "file:../../../React JS Project/team-web-app"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
