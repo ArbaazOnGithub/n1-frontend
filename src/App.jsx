@@ -15,6 +15,8 @@ const DashboardSummary = lazy(() => import("./Components/ui/Admin/Dashboard/Dash
 const Orders = lazy(() => import("./Components/ui/Admin/Orders/RecentOrdersTable"));
 const Users = lazy(() => import("./Components/ui/Admin/Users/Users"));
 const Services = lazy(() => import("./Components/ui/Admin/Services/Services"));
+const AdminReviews = lazy(() => import("./Components/ui/Admin/Reviews/Reviews"));
+const AdminInquiries = lazy(() => import("./Components/ui/Admin/ContactMessages/ContactMessages"));
 const AdminLayout = lazy(() => import("./Components/ui/AdminLayout"));
 const CustomerDashboard = lazy(() => import("./Pages/CustomerDashboard"));
 const ServiceDetailPage = lazy(() => import("./Pages/ServiceDetailPage"));
@@ -58,6 +60,8 @@ function App() {
               <Route path="orders" element={<Orders />} />
               <Route path="users" element={<Users />} />
               <Route path="services" element={<Services />} />
+              <Route path="reviews" element={<AdminReviews />} />
+              <Route path="contact-messages" element={<AdminInquiries />} />
             </Route>
             {/* 404 Catch-All Route */}
             <Route path="*" element={<NotFoundPage />} />

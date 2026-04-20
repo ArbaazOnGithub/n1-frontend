@@ -11,6 +11,8 @@ const Sidebar = () => {
     { to: '/admin/orders', label: 'Orders' },
     { to: '/admin/users', label: 'Users' },
     { to: '/admin/services', label: 'Services' },
+    { to: '/admin/reviews', label: 'Reviews' },
+    { to: '/admin/contact-messages', label: 'Inquiries' },
   ];
 
   return (

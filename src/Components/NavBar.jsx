@@ -86,7 +86,7 @@ const NavBar = () => {
             {/* Admin Dashboard Welcome Message */}
             {isAdminDashboard && (
               <div className="hidden sm:flex space-x-10">
-                <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+                <h1 className="mb-4 text-3xl font-bold text-green-400 dark:text-white md:text-3xl lg:text-4xl">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
                     Welcome&nbsp;
                   </span>
@@ -167,8 +167,8 @@ const NavBar = () => {
                 </>
               ) : (
                 <div className="px-6 py-4 border-b border-gray-100 bg-slate-50">
-                   <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Admin Mode</p>
-                   <p className="text-sm font-medium text-slate-700 truncate">{user?.email}</p>
+                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Admin Mode</p>
+                  <p className="text-sm font-medium text-green-400 truncate">{user?.email}</p>
                 </div>
               )}
 
@@ -193,7 +193,7 @@ const NavBar = () => {
                       </button>
                     )}
                     <div className="flex justify-center pt-2">
-                       <LogoutButton />
+                      <LogoutButton />
                     </div>
                   </>
                 ) : (
