@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 import Logo from '../assets/Img/Logo.png';
 import { toast } from "react-toastify";
@@ -11,6 +12,22 @@ const NavBar = () => {
   const { isLoggedIn, user, login, logout } = useContext(AuthContext); // Use AuthContext
   const location = useLocation();
   const navigate = useNavigate();
+
+  // ── Dark Mode Toggle ────────────────────────────────────────────────────────
+  const [isDark, setIsDark] = useState(
+    () => localStorage.getItem("n1-theme") === "dark"
+  );
+
+  useEffect(() => {
+    if (isDark) {
+      document.body.classList.add("dark-mode");
+      localStorage.setItem("n1-theme", "dark");
+    } else {
+      document.body.classList.remove("dark-mode");
+      localStorage.setItem("n1-theme", "light");
+    }
+  }, [isDark]);
+  // ───────────────────────────────────────────────────────────────────────────
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -97,7 +114,24 @@ const NavBar = () => {
             )}
 
             {/* Login/Logout Buttons */}
-            <div className="hidden sm:flex space-x-4">
+            <div className="hidden sm:flex items-center space-x-4">
+              {/* Dark Mode Toggle */}
+              <button
+                id="dark-mode-toggle"
+                onClick={() => setIsDark((d) => !d)}
+                title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                className="w-9 h-9 rounded-full flex items-center justify-center border transition-all duration-300"
+                style={{
+                  background: isDark
+                    ? "linear-gradient(135deg,#2979FF,#00D2FF)"
+                    : "rgba(241,245,249,1)",
+                  borderColor: isDark ? "#2979FF" : "#e2e8f0",
+                  color: isDark ? "#ffffff" : "#475569",
+                  boxShadow: isDark ? "0 0 14px rgba(41,121,255,0.45)" : "none",
+                }}
+              >
+                {isDark ? <MdLightMode size={18} /> : <MdDarkMode size={18} />}
+              </button>
               {isLoggedIn && user?.role === "ROLE_ADMIN" && (
                 <button
                   className="rounded text-md shadow-md bg-green-500 text-white font-semibold px-3 py-2 hover:opacity-80 transition"
@@ -130,8 +164,25 @@ const NavBar = () => {
               )}
             </div>
 
-            {/* Mobile Menu Button */}
-            <div className="sm:hidden">
+            {/* Mobile Menu Button + Dark Toggle */}
+            <div className="sm:hidden flex items-center gap-2">
+              {/* Mobile Dark Mode Toggle */}
+              <button
+                id="dark-mode-toggle-mobile"
+                onClick={() => setIsDark((d) => !d)}
+                title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                className="w-8 h-8 rounded-full flex items-center justify-center border transition-all duration-300"
+                style={{
+                  background: isDark
+                    ? "linear-gradient(135deg,#2979FF,#00D2FF)"
+                    : "rgba(241,245,249,1)",
+                  borderColor: isDark ? "#2979FF" : "#e2e8f0",
+                  color: isDark ? "#ffffff" : "#475569",
+                  boxShadow: isDark ? "0 0 12px rgba(41,121,255,0.4)" : "none",
+                }}
+              >
+                {isDark ? <MdLightMode size={16} /> : <MdDarkMode size={16} />}
+              </button>
               <button
                 onClick={toggleMenu}
                 className="text-gray-700 hover:text-blue-900 focus:outline-none"

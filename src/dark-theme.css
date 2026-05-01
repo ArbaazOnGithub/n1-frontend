@@ -1,0 +1,769 @@
+/* ============================================================
+   N1SOLUTION — DARK THEME (Cyber / Deep-Tech)
+   ============================================================
+   SAFETY GUARANTEE: Every single rule below is prefixed with
+   `body.dark-mode` — meaning they are COMPLETELY UNREACHABLE
+   unless the toggle button adds that class to <body>.
+   Your existing light theme is NEVER affected.
+
+   Color Palette:
+     Space Black   #020617  — Background
+     Electric Blue #2979FF  — Primary Buttons
+     Cyan Glow     #00D2FF  — Scanning Indicators / Accents
+     Neon Mint     #00FFA3  — Positive Status
+     Cyber Pink    #FF33A6  — Smart Interventions / Highlights
+     Pure White    #FFFFFF  — Main Typography
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   0. TRANSITION — smooth theme switching on all elements
+   ---------------------------------------------------------- */
+body.dark-mode,
+body.dark-mode *,
+body.dark-mode *::before,
+body.dark-mode *::after {
+  transition:
+    background-color 0.35s ease,
+    background 0.35s ease,
+    border-color 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+/* ----------------------------------------------------------
+   1. BODY / ROOT BACKGROUND
+   ---------------------------------------------------------- */
+body.dark-mode {
+  background-color: #020617 !important;
+  background-image:
+    radial-gradient(ellipse at 0% 0%, rgba(41, 121, 255, 0.18) 0, transparent 50%),
+    radial-gradient(ellipse at 100% 0%, rgba(0, 210, 255, 0.12) 0, transparent 45%),
+    radial-gradient(ellipse at 50% 100%, rgba(0, 255, 163, 0.10) 0, transparent 50%),
+    radial-gradient(ellipse at 80% 60%, rgba(255, 51, 166, 0.07) 0, transparent 40%),
+    radial-gradient(ellipse at 20% 70%, rgba(120, 40, 200, 0.08) 0, transparent 40%) !important;
+  background-attachment: fixed !important;
+  color: #ffffff !important;
+}
+
+/* ----------------------------------------------------------
+   2. NAVBAR
+   ---------------------------------------------------------- */
+body.dark-mode nav {
+  background-color: rgba(2, 6, 23, 0.92) !important;
+  backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(41, 121, 255, 0.25) !important;
+  box-shadow: 0 4px 32px rgba(41, 121, 255, 0.1) !important;
+}
+
+/* Nav text links */
+body.dark-mode nav button.text-slate-600,
+body.dark-mode nav a.text-slate-600 {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+body.dark-mode nav button.text-slate-600:hover,
+body.dark-mode nav a.text-slate-600:hover {
+  color: #00D2FF !important;
+}
+/* "My Orders" link with border-l */
+body.dark-mode nav button.border-l {
+  border-color: rgba(41, 121, 255, 0.3) !important;
+}
+
+/* Mobile menu panel */
+body.dark-mode nav > div > div.sm\:hidden div.bg-white {
+  background-color: #060d1f !important;
+  border-color: rgba(41, 121, 255, 0.2) !important;
+}
+body.dark-mode nav .sm\:hidden .text-gray-700 {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+body.dark-mode nav .sm\:hidden .hover\:bg-blue-50:hover {
+  background-color: rgba(41, 121, 255, 0.1) !important;
+}
+/* Mobile admin badge */
+body.dark-mode nav .bg-slate-50 {
+  background-color: #0a1628 !important;
+}
+/* Mobile logout / my-orders button */
+body.dark-mode nav .text-slate-700 {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+/* Mobile register outline button */
+body.dark-mode nav button.bg-white.text-blue-600 {
+  background-color: transparent !important;
+  border-color: #2979FF !important;
+  color: #2979FF !important;
+}
+
+/* ----------------------------------------------------------
+   3. HERO SECTION
+   ---------------------------------------------------------- */
+body.dark-mode .border.shadow.rounded-3xl.bg-white {
+  background: linear-gradient(135deg, #020617 0%, #060d26 50%, #020617 100%) !important;
+  border-color: rgba(41, 121, 255, 0.2) !important;
+  box-shadow: 0 0 60px rgba(41, 121, 255, 0.1) !important;
+}
+
+/* Hero tagline */
+body.dark-mode h4.text-blue-600 {
+  color: #00D2FF !important;
+}
+
+/* Main hero heading */
+body.dark-mode .tracking-tighter.text-slate-900 {
+  color: #ffffff !important;
+}
+body.dark-mode .text-blue-600.pb-2 {
+  color: #2979FF !important;
+  text-shadow: 0 0 32px rgba(41, 121, 255, 0.5) !important;
+}
+
+/* Hero subtext */
+body.dark-mode p.text-slate-600 {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* Hero image ring */
+body.dark-mode .bg-gradient-to-tr.from-blue-100.to-violet-100 {
+  background: linear-gradient(135deg, rgba(41, 121, 255, 0.2), rgba(0, 210, 255, 0.2)) !important;
+}
+body.dark-mode img.border-4.border-white {
+  border-color: rgba(41, 121, 255, 0.4) !important;
+  box-shadow: 0 0 40px rgba(0, 210, 255, 0.2) !important;
+}
+
+/* ----------------------------------------------------------
+   4. BUTTONS (premium-button / premium-button-outline)
+   ---------------------------------------------------------- */
+body.dark-mode .premium-button {
+  background: linear-gradient(135deg, #2979FF, #00D2FF) !important;
+  box-shadow: 0 0 20px rgba(41, 121, 255, 0.4), 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+  color: #ffffff !important;
+}
+body.dark-mode .premium-button:hover {
+  box-shadow: 0 0 35px rgba(0, 210, 255, 0.5), 0 6px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+body.dark-mode .premium-button-outline {
+  border-color: #2979FF !important;
+  color: #00D2FF !important;
+  background-color: transparent !important;
+}
+body.dark-mode .premium-button-outline:hover {
+  background-color: rgba(41, 121, 255, 0.12) !important;
+}
+
+/* ----------------------------------------------------------
+   5. LITTLE CARDS (icon grid)
+   ---------------------------------------------------------- */
+body.dark-mode .cards.border.shadow.rounded-lg,
+body.dark-mode div.h-30.w-30.p-1.border.shadow.rounded-lg {
+  background-color: #0a1628 !important;
+  border-color: rgba(0, 210, 255, 0.25) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(0, 210, 255, 0.1) !important;
+}
+body.dark-mode .text-gray-700.text-center {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+body.dark-mode .text-blue-500 {
+  color: #00D2FF !important;
+}
+
+/* ----------------------------------------------------------
+   6. SERVICE CARDS (Carousel / Card.jsx)
+   ---------------------------------------------------------- */
+body.dark-mode .cards.w-60.bg-white {
+  background-color: #080f24 !important;
+  border-color: rgba(41, 121, 255, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+}
+body.dark-mode .cards.w-60.bg-white:hover {
+  box-shadow: 0 0 30px rgba(41, 121, 255, 0.25), 0 16px 40px rgba(0, 0, 0, 0.6) !important;
+  border-color: rgba(0, 210, 255, 0.4) !important;
+}
+
+/* Card title */
+body.dark-mode .cards h3.text-black {
+  color: #ffffff !important;
+}
+
+/* Card "Learn More" button */
+body.dark-mode .cards button.border.border-blue-500.text-blue-600 {
+  border-color: #2979FF !important;
+  color: #00D2FF !important;
+  background-color: transparent !important;
+}
+body.dark-mode .cards button.border.border-blue-500.text-blue-600:hover {
+  background-color: rgba(41, 121, 255, 0.1) !important;
+}
+
+/* Card corner decorations — Neon Mint top-right, Electric Blue bottom-left */
+body.dark-mode .cards .border-t-4.border-r-4.border-green-500 {
+  border-color: #00FFA3 !important;
+  box-shadow: 4px -4px 12px rgba(0, 255, 163, 0.4) !important;
+}
+body.dark-mode .cards .border-b-4.border-l-4.border-blue-500 {
+  border-color: #2979FF !important;
+  box-shadow: -4px 4px 12px rgba(41, 121, 255, 0.4) !important;
+}
+
+/* ----------------------------------------------------------
+   7. CAROUSEL SECTION WRAPPER
+   ---------------------------------------------------------- */
+body.dark-mode .carousel {
+  background-color: transparent !important;
+}
+
+/* Carousel section heading */
+body.dark-mode .carousel h2,
+body.dark-mode .carousel h3,
+body.dark-mode .carousel p.text-gray-600,
+body.dark-mode .carousel p.text-slate-600 {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Prev/Next buttons */
+body.dark-mode .custom-prev-button,
+body.dark-mode .custom-next-button,
+body.dark-mode .prev-button,
+body.dark-mode .next-button {
+  background-color: #2979FF !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 12px rgba(41, 121, 255, 0.4) !important;
+}
+body.dark-mode .custom-prev-button:hover,
+body.dark-mode .custom-next-button:hover,
+body.dark-mode .prev-button:hover,
+body.dark-mode .next-button:hover {
+  background-color: #00D2FF !important;
+}
+
+/* ----------------------------------------------------------
+   8. APPLY STEPS SECTION
+   ---------------------------------------------------------- */
+body.dark-mode .applysteps section,
+body.dark-mode section.py-18 {
+  background-color: #020617 !important;
+}
+
+/* Section heading */
+body.dark-mode section.py-18 > p.font-serif {
+  color: #ffffff !important;
+}
+
+/* Step cards */
+body.dark-mode .applysteps .bg-white.border-gray-200,
+body.dark-mode div[class*="max-w-md"].bg-white {
+  background-color: #080f24 !important;
+  border-color: rgba(41, 121, 255, 0.2) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Step number badge — Neon Mint glowing pill */
+body.dark-mode .applysteps .bg-green-300 {
+  background-color: rgba(0, 255, 163, 0.18) !important;
+  color: #00FFA3 !important;
+  border: 1px solid rgba(0, 255, 163, 0.5) !important;
+  box-shadow: 0 0 10px rgba(0, 255, 163, 0.3) !important;
+  text-shadow: 0 0 8px rgba(0, 255, 163, 0.5) !important;
+}
+
+/* Step icon */
+body.dark-mode .applysteps .text-blue-900 {
+  color: #2979FF !important;
+}
+
+/* Step title (currently light gray — fix for dark bg) */
+body.dark-mode .applysteps h5.text-gray-300 {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Step description text */
+body.dark-mode .applysteps p.text-sm {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Step card corner decorations — Cyan top, Neon Mint bottom */
+body.dark-mode .applysteps .border-t-4.border-r-4.border-blue-500 {
+  border-color: #00D2FF !important;
+  box-shadow: 4px -4px 10px rgba(0, 210, 255, 0.35) !important;
+}
+body.dark-mode .applysteps .border-b-4.border-l-4.border-green-500 {
+  border-color: #00FFA3 !important;
+  box-shadow: -4px 4px 10px rgba(0, 255, 163, 0.3) !important;
+}
+
+/* ----------------------------------------------------------
+   9. ACHIEVEMENTS SECTION
+   ---------------------------------------------------------- */
+body.dark-mode section.bg-gray-100 {
+  background-color: #030a1a !important;
+}
+
+body.dark-mode section.bg-gray-100 h1 {
+  color: #ffffff !important;
+}
+body.dark-mode section.bg-gray-100 p {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Achievement icon circles — rotating accent colors */
+body.dark-mode .bg-gray-200.border.border-gray-300 {
+  background-color: #0a1628 !important;
+  border-color: rgba(0, 210, 255, 0.35) !important;
+  box-shadow:
+    6px 6px 16px rgba(0, 0, 0, 0.6),
+    -6px -6px 16px rgba(0, 210, 255, 0.06),
+    0 0 20px rgba(0, 210, 255, 0.15) !important;
+  color: #00D2FF !important;
+}
+/* First achievement icon — Neon Mint */
+body.dark-mode .bg-gray-200.border.border-gray-300:nth-child(1) {
+  border-color: rgba(0, 255, 163, 0.4) !important;
+  box-shadow: 0 0 20px rgba(0, 255, 163, 0.2) !important;
+  color: #00FFA3 !important;
+}
+/* Second achievement icon — Cyber Pink */
+body.dark-mode .bg-gray-200.border.border-gray-300:nth-child(2) {
+  border-color: rgba(255, 51, 166, 0.4) !important;
+  box-shadow: 0 0 20px rgba(255, 51, 166, 0.2) !important;
+  color: #FF33A6 !important;
+}
+
+/* ----------------------------------------------------------
+   10. REVIEWS SECTION
+   ---------------------------------------------------------- */
+body.dark-mode section#reviews {
+  background-color: #020617 !important;
+}
+
+/* Section badge */
+body.dark-mode section#reviews .text-blue-600.uppercase {
+  color: #00D2FF !important;
+}
+
+/* Section heading */
+body.dark-mode section#reviews h2.text-gray-900 {
+  color: #ffffff !important;
+}
+body.dark-mode section#reviews .text-transparent.bg-clip-text {
+  background-image: linear-gradient(135deg, #2979FF, #00D2FF) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+}
+
+/* Subtext */
+body.dark-mode section#reviews p.text-gray-600 {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Write a Review button */
+body.dark-mode section#reviews button.bg-gray-900 {
+  background-color: #2979FF !important;
+  box-shadow: 0 0 24px rgba(41, 121, 255, 0.35) !important;
+}
+body.dark-mode section#reviews button.bg-gray-900:hover {
+  background-color: #00D2FF !important;
+}
+
+/* Review form */
+body.dark-mode section#reviews form.bg-white {
+  background-color: #080f24 !important;
+  border-color: rgba(41, 121, 255, 0.2) !important;
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5) !important;
+}
+body.dark-mode section#reviews form h3 {
+  color: #ffffff !important;
+}
+body.dark-mode section#reviews form label {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+body.dark-mode section#reviews form select,
+body.dark-mode section#reviews form textarea {
+  background-color: #0a1628 !important;
+  color: #ffffff !important;
+}
+body.dark-mode section#reviews form select option {
+  background-color: #0a1628 !important;
+  color: #ffffff !important;
+}
+
+/* Review cards */
+body.dark-mode section#reviews .group.bg-white.rounded-\[2\.5rem\] {
+  background-color: #080f24 !important;
+  border-color: rgba(41, 121, 255, 0.1) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4) !important;
+}
+body.dark-mode section#reviews .group.bg-white.rounded-\[2\.5rem\]:hover {
+  border-color: rgba(0, 210, 255, 0.3) !important;
+  box-shadow: 0 0 40px rgba(0, 210, 255, 0.1), 0 40px 80px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Review comment text */
+body.dark-mode section#reviews p.text-gray-700 {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* Review service tag badge */
+body.dark-mode section#reviews .bg-blue-50.text-blue-600 {
+  background-color: rgba(41, 121, 255, 0.12) !important;
+  color: #00D2FF !important;
+  border-color: rgba(0, 210, 255, 0.2) !important;
+}
+
+/* Review author name */
+body.dark-mode section#reviews h4.text-gray-900 {
+  color: #ffffff !important;
+}
+body.dark-mode section#reviews p.text-gray-400 {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* Review card divider */
+body.dark-mode section#reviews .border-t.border-gray-50 {
+  border-color: rgba(41, 121, 255, 0.1) !important;
+}
+
+/* Author avatar */
+body.dark-mode section#reviews .from-blue-500.to-indigo-600 {
+  background: linear-gradient(135deg, #2979FF, #00D2FF) !important;
+  box-shadow: 0 0 16px rgba(41, 121, 255, 0.4) !important;
+}
+
+/* Show More button */
+body.dark-mode section#reviews button.border-2.border-gray-200 {
+  background-color: transparent !important;
+  border-color: rgba(41, 121, 255, 0.4) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+body.dark-mode section#reviews button.border-2.border-gray-200:hover {
+  background-color: rgba(41, 121, 255, 0.1) !important;
+  border-color: #00D2FF !important;
+}
+
+/* Empty reviews state */
+body.dark-mode section#reviews .text-center.bg-white.rounded-\[3rem\] {
+  background-color: #080f24 !important;
+  border-color: rgba(41, 121, 255, 0.15) !important;
+}
+body.dark-mode section#reviews p.text-gray-400 {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* ----------------------------------------------------------
+   11. CONTACT SECTION
+   ---------------------------------------------------------- */
+body.dark-mode .contact > div,
+body.dark-mode div.bg-gradient-to-b.from-gray-50.to-white {
+  background: #020617 !important;
+}
+
+/* Section headings */
+body.dark-mode .contact h2.text-gray-900 {
+  color: #ffffff !important;
+}
+body.dark-mode .contact p.text-gray-500 {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+/* Info cards (Our Office, Call Us, Visit Us) */
+body.dark-mode .contact .bg-white.rounded-3xl {
+  background-color: #080f24 !important;
+  border-color: rgba(41, 121, 255, 0.15) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+body.dark-mode .contact h3.text-gray-900 {
+  color: #ffffff !important;
+}
+body.dark-mode .contact p.text-gray-500.text-sm {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+/* Icon backgrounds inside info cards — each card a distinct accent color */
+body.dark-mode .contact .bg-blue-50 {
+  background-color: rgba(41, 121, 255, 0.15) !important;
+  color: #2979FF !important;
+  box-shadow: 0 0 14px rgba(41, 121, 255, 0.25) !important;
+}
+body.dark-mode .contact .bg-indigo-50 {
+  background-color: rgba(0, 255, 163, 0.12) !important;
+  color: #00FFA3 !important;
+  box-shadow: 0 0 14px rgba(0, 255, 163, 0.2) !important;
+}
+body.dark-mode .contact .bg-violet-50 {
+  /* Visit Us icon — Cyber Pink */
+  background-color: rgba(255, 51, 166, 0.12) !important;
+  color: #FF33A6 !important;
+  box-shadow: 0 0 14px rgba(255, 51, 166, 0.2) !important;
+}
+
+/* Map/carousel placeholder */
+body.dark-mode .contact .h-48.bg-gray-100 {
+  background-color: #0a1628 !important;
+  border-radius: 1rem !important;
+}
+
+/* Form card */
+body.dark-mode .contact .bg-white.rounded-\[2\.5rem\] {
+  background-color: #080f24 !important;
+  border-color: rgba(41, 121, 255, 0.15) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+}
+body.dark-mode .contact div.absolute.bg-blue-50 {
+  background-color: rgba(41, 121, 255, 0.06) !important;
+}
+body.dark-mode .contact h2.text-gray-900.mb-8 {
+  color: #ffffff !important;
+}
+body.dark-mode .contact label.text-gray-700 {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Form inputs */
+body.dark-mode .contact input,
+body.dark-mode .contact textarea {
+  background-color: #0a1628 !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(41, 121, 255, 0.2) !important;
+}
+body.dark-mode .contact input::placeholder,
+body.dark-mode .contact textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+body.dark-mode .contact input:focus,
+body.dark-mode .contact textarea:focus {
+  border-color: #2979FF !important;
+  box-shadow: 0 0 0 3px rgba(41, 121, 255, 0.15) !important;
+  outline: none !important;
+}
+
+/* Terms text & links */
+body.dark-mode .contact .text-gray-500 span {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+body.dark-mode .contact a.text-blue-600 {
+  color: #00D2FF !important;
+}
+
+/* Submit button */
+body.dark-mode .contact button[type="submit"] {
+  background: linear-gradient(135deg, #2979FF, #00D2FF) !important;
+  box-shadow: 0 0 24px rgba(41, 121, 255, 0.4) !important;
+}
+body.dark-mode .contact button[type="submit"]:hover {
+  box-shadow: 0 0 40px rgba(0, 210, 255, 0.5) !important;
+}
+
+/* ----------------------------------------------------------
+   12. FOOTER
+   ---------------------------------------------------------- */
+body.dark-mode footer.bg-gray-900 {
+  background-color: #010410 !important;
+  border-top: 1px solid rgba(41, 121, 255, 0.15) !important;
+}
+
+body.dark-mode footer h3,
+body.dark-mode footer h4,
+body.dark-mode footer p {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+body.dark-mode footer a:hover,
+body.dark-mode footer .hover\:text-gray-300:hover {
+  color: #00D2FF !important;
+}
+
+body.dark-mode footer .text-gray-400 {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Social icons hover — Cyber Pink with glow */
+body.dark-mode footer a:hover svg {
+  color: #FF33A6 !important;
+  filter: drop-shadow(0 0 6px rgba(255, 51, 166, 0.6)) !important;
+}
+
+/* ----------------------------------------------------------
+   13. CHAT WIDGET
+   ---------------------------------------------------------- */
+/* Window border */
+body.dark-mode .fixed.bottom-6.right-6 > div.bg-white {
+  background-color: #080f24 !important;
+  border-color: rgba(41, 121, 255, 0.25) !important;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(41, 121, 255, 0.1) !important;
+}
+
+/* Chat header gradient — keep it but make it more cyber */
+body.dark-mode .bg-gradient-to-r.from-blue-600.to-violet-600 {
+  background: linear-gradient(135deg, #2979FF, #00D2FF) !important;
+}
+
+/* Messages area */
+body.dark-mode .flex-1.overflow-y-auto.bg-slate-50 {
+  background-color: #040c1e !important;
+}
+
+/* Bot message bubble */
+body.dark-mode .bg-white.text-slate-700.border.border-slate-100 {
+  background-color: #0a1628 !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(41, 121, 255, 0.2) !important;
+}
+
+/* Input area */
+body.dark-mode .p-3.bg-white.border-t {
+  background-color: #060d1f !important;
+  border-color: rgba(41, 121, 255, 0.15) !important;
+}
+body.dark-mode .p-3.bg-white.border-t input {
+  background-color: #0a1628 !important;
+  color: #ffffff !important;
+  border-color: rgba(41, 121, 255, 0.25) !important;
+}
+body.dark-mode .p-3.bg-white.border-t input::placeholder {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+body.dark-mode .p-3.bg-white.border-t input:focus {
+  border-color: #2979FF !important;
+  outline: none !important;
+}
+
+/* Send button */
+body.dark-mode .p-3.bg-white.border-t button {
+  background: linear-gradient(135deg, #2979FF, #00D2FF) !important;
+  box-shadow: 0 0 12px rgba(41, 121, 255, 0.4) !important;
+}
+
+/* Toggle chat button */
+body.dark-mode .fixed.bottom-6.right-6 > button {
+  background: linear-gradient(135deg, #2979FF, #00D2FF) !important;
+  box-shadow: 0 0 24px rgba(0, 210, 255, 0.35), 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ----------------------------------------------------------
+   14. GENERAL WHITE BACKGROUNDS (catch-all for glass cards)
+   ---------------------------------------------------------- */
+body.dark-mode .glass-card {
+  background-color: rgba(8, 15, 36, 0.85) !important;
+  border-color: rgba(41, 121, 255, 0.15) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Spinner loader */
+body.dark-mode .border-b-2.border-blue-600 {
+  border-bottom-color: #00D2FF !important;
+}
+body.dark-mode .border-4.border-gray-200.border-t-blue-600 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  border-top-color: #2979FF !important;
+}
+
+/* ----------------------------------------------------------
+   15. SCROLLBAR THEMING
+   ---------------------------------------------------------- */
+body.dark-mode ::-webkit-scrollbar {
+  width: 6px !important;
+}
+body.dark-mode ::-webkit-scrollbar-track {
+  background: #020617 !important;
+}
+body.dark-mode ::-webkit-scrollbar-thumb {
+  background: rgba(41, 121, 255, 0.4) !important;
+  border-radius: 9999px !important;
+}
+body.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: #00D2FF !important;
+}
+
+/* ----------------------------------------------------------
+   16. GLOW PULSE ANIMATION FOR ACTIVE DARK MODE
+   ---------------------------------------------------------- */
+@keyframes cyber-glow {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+body.dark-mode .text-blue-600.italic {
+  animation: cyber-glow 4s ease-in-out infinite !important;
+}
+
+/* ----------------------------------------------------------
+   17. ACCENT COLOR BOOSTS — More Color, More Cyber
+       Neon Mint, Cyber Pink, and Purple applied more
+       broadly across the UI for a vivid cyber palette.
+   ---------------------------------------------------------- */
+
+/* Neon Mint — positive status text */
+body.dark-mode .text-green-400 {
+  color: #00FFA3 !important;
+  text-shadow: 0 0 8px rgba(0, 255, 163, 0.4) !important;
+}
+body.dark-mode .text-green-500,
+body.dark-mode .text-emerald-600 {
+  color: #00FFA3 !important;
+}
+
+/* Green badges (Admin Panel toggle button) */
+body.dark-mode .bg-green-500 {
+  background: linear-gradient(135deg, #00cc84, #00FFA3) !important;
+  box-shadow: 0 0 16px rgba(0, 255, 163, 0.35) !important;
+}
+body.dark-mode .shadow-green-200 {
+  box-shadow: 0 0 16px rgba(0, 255, 163, 0.25) !important;
+}
+
+/* Cyber Pink — review Write button hover, tag highlights */
+body.dark-mode .text-amber-400 {
+  color: #FFD700 !important;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.3) !important;
+}
+
+/* Purple glow ambient — hero section tint */
+body.dark-mode .bg-gradient-to-tr.from-blue-100.to-violet-100 {
+  background: linear-gradient(135deg,
+    rgba(41, 121, 255, 0.25),
+    rgba(120, 40, 200, 0.20),
+    rgba(0, 210, 255, 0.15)) !important;
+  box-shadow: 0 0 40px rgba(120, 40, 200, 0.2) !important;
+}
+
+/* Review section 'Write a Review' button — Cyber Pink */
+body.dark-mode section#reviews button.bg-gray-900 {
+  background: linear-gradient(135deg, #cc0077, #FF33A6) !important;
+  box-shadow: 0 0 24px rgba(255, 51, 166, 0.4) !important;
+  color: #ffffff !important;
+}
+body.dark-mode section#reviews button.bg-gray-900:hover {
+  box-shadow: 0 0 40px rgba(255, 51, 166, 0.6) !important;
+}
+
+/* Review service tag — Neon Mint accent */
+body.dark-mode section#reviews .bg-blue-50.text-blue-600 {
+  background-color: rgba(0, 255, 163, 0.1) !important;
+  color: #00FFA3 !important;
+  border-color: rgba(0, 255, 163, 0.3) !important;
+}
+
+/* Review author avatar — Purple gradient */
+body.dark-mode section#reviews .from-blue-500.to-indigo-600 {
+  background: linear-gradient(135deg, #7828C8, #2979FF) !important;
+  box-shadow: 0 0 16px rgba(120, 40, 200, 0.4) !important;
+}
+
+/* Contact form submit button — keeps Electric Blue to Cyan */
+body.dark-mode .contact button[type="submit"] {
+  background: linear-gradient(135deg, #2979FF, #00D2FF) !important;
+  box-shadow: 0 0 28px rgba(41, 121, 255, 0.45) !important;
+}
+
+/* Footer border top — subtle Cyber Pink line */
+body.dark-mode footer.bg-gray-900 {
+  background-color: #010410 !important;
+  border-top: 1px solid rgba(255, 51, 166, 0.18) !important;
+}
+
+/* Neon Mint star ratings in review cards */
+body.dark-mode .text-amber-400 {
+  color: #00FFA3 !important;
+  text-shadow: 0 0 6px rgba(0, 255, 163, 0.35) !important;
+}

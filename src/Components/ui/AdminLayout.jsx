@@ -8,7 +8,7 @@ const AdminLayout = () => {
     <div className="flex mt-20 h-screen bg-gray-100 dark:bg-gray-900 ">
       <Sidebar />
       <div className="flex-1 overflow-x-hidden overflow-y-auto p-4">
-        <Outlet /> {/* This will render the nested routes */}
+        <Outlet />
       </div>
     </div>
   );

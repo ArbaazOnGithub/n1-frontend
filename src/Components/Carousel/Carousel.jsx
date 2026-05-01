@@ -122,6 +122,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Card from '../Cards/Card';
 import ServiceForm from '../Forms/ServiceForm';
 import config from '@/config'; // Import your config file
@@ -132,6 +134,7 @@ const Carousel = () => {
   const [selectedService, setSelectedService] = useState(null);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   // Fetch services from the API
   useEffect(() => {
@@ -164,8 +167,13 @@ const Carousel = () => {
         description={service.description || "No description available."}
         image={service.imageUrl} // Use the image URL from the API
         onClick={() => {
-          setSelectedService(service); // Set the selected service
-          setShowForm(true); // Show the form
+          if (!localStorage.getItem('token')) {
+            toast.error("Please login to apply");
+            navigate("/login");
+          } else {
+            setSelectedService(service); // Set the selected service
+            setShowForm(true); // Show the form
+          }
         }}
       />
     </div>

@@ -2,7 +2,14 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children, role }) => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    let user = null;
+    try {
+        const storedUser = localStorage.getItem("user");
+        user = storedUser ? JSON.parse(storedUser) : null;
+    } catch (e) {
+        console.error("Error parsing user from localStorage:", e);
+        localStorage.removeItem("user");
+    }
 
     // If no user is logged in, redirect to home
     if (!user) {

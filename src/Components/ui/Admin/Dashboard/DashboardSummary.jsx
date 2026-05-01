@@ -60,10 +60,12 @@ const DashboardSummary = () => {
 
         // Build service popularity data
         const serviceCounts = {};
-        ordersData.forEach(order => {
-          const name = order.serviceType || 'Unknown';
-          serviceCounts[name] = (serviceCounts[name] || 0) + 1;
-        });
+        if (Array.isArray(ordersData)) {
+          ordersData.forEach(order => {
+            const name = order.serviceType || 'Unknown';
+            serviceCounts[name] = (serviceCounts[name] || 0) + 1;
+          });
+        }
         setServiceData(
           Object.entries(serviceCounts)
             .map(([name, count]) => ({ name, count }))
@@ -72,7 +74,8 @@ const DashboardSummary = () => {
 
       } catch (error) {
         console.error('Error fetching summary data:', error);
-        if (error.message.includes('No authentication token found') || error.message.includes('401')) {
+        const errorMsg = error?.message || '';
+        if (errorMsg.includes('No authentication token found') || errorMsg.includes('401')) {
           navigate('/login');
         }
       } finally {
@@ -86,13 +89,15 @@ const DashboardSummary = () => {
   // Build monthly orders trend from order dates
   const monthlyData = React.useMemo(() => {
     const counts = {};
-    allOrders.forEach(order => {
-      if (order.date) {
-        const d = new Date(order.date);
-        const key = d.toLocaleString('default', { month: 'short', year: '2-digit' });
-        counts[key] = (counts[key] || 0) + 1;
-      }
-    });
+    if (Array.isArray(allOrders)) {
+      allOrders.forEach(order => {
+        if (order.date) {
+          const d = new Date(order.date);
+          const key = d.toLocaleString('default', { month: 'short', year: '2-digit' });
+          counts[key] = (counts[key] || 0) + 1;
+        }
+      });
+    }
     return Object.entries(counts).map(([month, orders]) => ({ month, orders })).slice(-6);
   }, [allOrders]);
 

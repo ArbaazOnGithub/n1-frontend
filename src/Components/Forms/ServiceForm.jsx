@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import config from "@/config"; // Import your config file
@@ -6,6 +7,7 @@ import config from "@/config"; // Import your config file
 const ServiceForm = ({ selectedService, fields, onClose }) => {
   const [formData, setFormData] = useState({});
   const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -155,6 +157,7 @@ const ServiceForm = ({ selectedService, fields, onClose }) => {
       console.error("Error submitting form:", error);
       if (!localStorage.getItem('token')) {
         toast.error("Please log in to submit the form.");
+        navigate("/login");
       } else {
         toast.error("Failed to submit the form. Please try again.");
       }
@@ -167,20 +170,20 @@ const ServiceForm = ({ selectedService, fields, onClose }) => {
 
 
   return (
-    <div className="select-none p-5 bg-white rounded-lg shadow-lg w-full">
+    <div className="select-none p-5 bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full border dark:border-gray-700">
 
 
-      <h2 className="text-2xl font-bold text-center">{selectedService} Service</h2>
+      <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">{selectedService} Service</h2>
 
       {fields?.map((field) => (
-        <div key={field.name} className="mt-2">
-          <label className="block text-gray-700">{field.label}</label>
+        <div key={field.name} className="mt-4">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{field.label}</label>
           {field.type === "select" ? (
             <select
               name={field.name}
               value={formData[field.name] || "Select"}
               onChange={handleChange}
-              className="w-full p-2 border rounded"
+              className="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="Select">Select</option>
               {field.options.map((option) => (
@@ -195,7 +198,7 @@ const ServiceForm = ({ selectedService, fields, onClose }) => {
               name={field.name}
               value={formData[field.name] || ""}
               onChange={handleChange}
-              className="w-full p-2 border rounded"
+              className="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg focus:ring-blue-500 focus:border-blue-500"
               placeholder={`Enter ${field.label}`}
             />
           )}

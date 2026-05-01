@@ -64,33 +64,33 @@ export default function ContactUs() {
   };
 
   return (
-    <div className="select-none min-h-screen py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white">
+    <div className="select-none min-h-screen py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
       <ToastContainer />
 
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-extrabold text-gray-900 sm:text-5xl">Get in Touch</h2>
-          <p className="mt-4 text-xl text-gray-500">We'd love to hear from you. Our team is always here to help.</p>
+          <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white sm:text-5xl">Get in Touch</h2>
+          <p className="mt-4 text-xl text-gray-500 dark:text-gray-400">We'd love to hear from you. Our team is always here to help.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
           {/* Contact Info Cards */}
           <div className="space-y-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="p-8 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-gray-100 flex flex-col items-center text-center">
-                <div className="p-4 bg-blue-50 rounded-2xl text-blue-600 mb-6 font-bold">
+              <div className="p-8 bg-white dark:bg-gray-800 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center">
+                <div className="p-4 bg-blue-50 dark:bg-blue-900/30 rounded-2xl text-blue-600 dark:text-blue-400 mb-6 font-bold">
                   <PiBuildingOfficeBold size={32} />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900">Our Office</h3>
-                <p className="mt-2 text-gray-500 text-sm">MUMBAI, IND<br />Zip Code: 03875</p>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">Our Office</h3>
+                <p className="mt-2 text-gray-500 dark:text-gray-400 text-sm">MUMBAI, IND<br />Zip Code: 03875</p>
               </div>
 
-              <div className="p-8 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-gray-100 flex flex-col items-center text-center">
-                <div className="p-4 bg-indigo-50 rounded-2xl text-indigo-600 mb-6 font-bold">
+              <div className="p-8 bg-white dark:bg-gray-800 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center">
+                <div className="p-4 bg-indigo-50 dark:bg-indigo-900/30 rounded-2xl text-indigo-600 dark:text-indigo-400 mb-6 font-bold">
                   <IoMdCall size={32} />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900">Call Us</h3>
-                <p className="mt-2 text-gray-500 text-sm">+91 96162 73393<br />Mon-Fri 9am-6pm</p>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">Call Us</h3>
+                <p className="mt-2 text-gray-500 dark:text-gray-400 text-sm">+91 96162 73393<br />Mon-Fri 9am-6pm</p>
               </div>
             </div>
 
@@ -111,32 +111,32 @@ export default function ContactUs() {
           </div>
 
           {/* Form Section */}
-          <div className="bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-8 md:p-12 border border-gray-50 relative overflow-hidden">
-            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-blue-50 rounded-full opacity-50 blur-3xl"></div>
+          <div className="bg-white dark:bg-gray-800 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] p-8 md:p-12 border border-gray-50 dark:border-gray-700 relative overflow-hidden">
+            <div className="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 bg-blue-50 dark:bg-blue-900/10 rounded-full opacity-50 blur-3xl"></div>
             <div className="relative">
-              <h2 className="text-2xl font-bold text-gray-900 mb-8">Send us a Message</h2>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">Send us a Message</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-700 ml-1">Full Name</label>
+                    <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Full Name</label>
                     <input
                       type="text"
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleChange}
-                      className="w-full px-5 py-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-blue-500 transition-all font-medium text-gray-900 placeholder-gray-400"
+                      className="w-full px-5 py-4 rounded-2xl bg-gray-50 dark:bg-gray-700 border-none focus:ring-2 focus:ring-blue-500 transition-all font-medium text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="Your Name"
                       required
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-semibold text-gray-700 ml-1">Your Email</label>
+                    <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Your Email</label>
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-5 py-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-blue-500 transition-all font-medium text-gray-900 placeholder-gray-400"
+                      className="w-full px-5 py-4 rounded-2xl bg-gray-50 dark:bg-gray-700 border-none focus:ring-2 focus:ring-blue-500 transition-all font-medium text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="name@example.com"
                       required
                     />
@@ -144,35 +144,35 @@ export default function ContactUs() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700 ml-1">Phone Number</label>
+                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Phone Number</label>
                   <input
                     type="tel"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-5 py-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-blue-500 transition-all font-medium text-gray-900 placeholder-gray-400"
+                    className="w-full px-5 py-4 rounded-2xl bg-gray-50 dark:bg-gray-700 border-none focus:ring-2 focus:ring-blue-500 transition-all font-medium text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder="+91 00000 00000"
                     required
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-gray-700 ml-1">Your Message</label>
+                  <label className="text-sm font-semibold text-gray-700 dark:text-gray-300 ml-1">Your Message</label>
                   <textarea
                     rows="4"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full px-5 py-4 rounded-2xl bg-gray-50 border-none focus:ring-2 focus:ring-blue-500 transition-all font-medium text-gray-900 placeholder-gray-400 resize-none"
+                    className="w-full px-5 py-4 rounded-2xl bg-gray-50 dark:bg-gray-700 border-none focus:ring-2 focus:ring-blue-500 transition-all font-medium text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none"
                     placeholder="Tell us how we can help..."
                     required
                   ></textarea>
                 </div>
 
-                <div className="flex items-start gap-3 text-sm text-gray-500 px-1">
-                  <input type="checkbox" className="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer" required />
+                <div className="flex items-start gap-3 text-sm text-gray-500 dark:text-gray-400 px-1">
+                  <input type="checkbox" className="mt-1 w-4 h-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer dark:bg-gray-700 dark:border-gray-600" required />
                   <span>
-                    I agree to the <a href="#" className="text-blue-600 font-semibold hover:underline">Terms of Service</a> and <a href="#" className="text-blue-600 font-semibold hover:underline">Privacy Policy</a>.
+                    I agree to the <a href="#" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Terms of Service</a> and <a href="#" className="text-blue-600 dark:text-blue-400 font-semibold hover:underline">Privacy Policy</a>.
                   </span>
                 </div>
 

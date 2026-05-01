@@ -26,7 +26,7 @@ const RecentOrdersTable = () => {
           },
         });
         const data = await response.json();
-        setOrders(data);
+        setOrders(Array.isArray(data) ? data : []);
       } catch (error) {
         toast.error(`Error fetching orders: ${error.message}`);
       } finally {
@@ -92,9 +92,9 @@ const RecentOrdersTable = () => {
     });
   };
 
-  const indexOfLastRow = currentPage * rowsPerPage;
-  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentRows = orders.slice(indexOfFirstRow, indexOfLastRow);
+  const safeOrders = Array.isArray(orders) ? orders : [];
+  const totalPages = Math.ceil(safeOrders.length / rowsPerPage);
+  const currentRows = safeOrders.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -137,8 +137,8 @@ const RecentOrdersTable = () => {
                     <td className="p-2 font-medium">{order.id}</td>
                     <td className="p-2">
                       <div className="flex flex-col">
-                        <span className="font-medium">{order.user.name}</span>
-                        <span className="text-xs text-gray-500">{order.user.number}</span>
+                        <span className="font-medium">{order.user?.name || "Unknown"}</span>
+                        <span className="text-xs text-gray-500">{order.user?.number || "No number"}</span>
                       </div>
                     </td>
                     <td className="p-2">{order.serviceType}</td>

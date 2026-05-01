@@ -6,18 +6,21 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "./Components/AuthContext"; // Import AuthProvider
 import "./App.css";
+import "./dark-theme.css";
 
 // Lazy Loaded Components
 const Home = lazy(() => import("./Components/Home"));
 const Login = lazy(() => import("./Components/Authorization/Login"));
 const SignUp = lazy(() => import("./Components/Authorization/SignUp"));
-const DashboardSummary = lazy(() => import("./Components/ui/Admin/Dashboard/DashboardSummary"));
+// const DashboardSummary = lazy(() => import("./Components/ui/Admin/Dashboard/DashboardSummary"));
+// const AdminLayout = lazy(() => import("./Components/ui/AdminLayout"));
+import DashboardSummary from "./Components/ui/Admin/Dashboard/DashboardSummary";
+import AdminLayout from "./Components/ui/AdminLayout";
 const Orders = lazy(() => import("./Components/ui/Admin/Orders/RecentOrdersTable"));
 const Users = lazy(() => import("./Components/ui/Admin/Users/Users"));
 const Services = lazy(() => import("./Components/ui/Admin/Services/Services"));
 const AdminReviews = lazy(() => import("./Components/ui/Admin/Reviews/Reviews"));
 const AdminInquiries = lazy(() => import("./Components/ui/Admin/ContactMessages/ContactMessages"));
-const AdminLayout = lazy(() => import("./Components/ui/AdminLayout"));
 const CustomerDashboard = lazy(() => import("./Pages/CustomerDashboard"));
 const ServiceDetailPage = lazy(() => import("./Pages/ServiceDetailPage"));
 const NotFoundPage = lazy(() => import("./Pages/NotFoundPage"));

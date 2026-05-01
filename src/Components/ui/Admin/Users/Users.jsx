@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { toast } from 'react-toastify';
 import { Card } from '../../../ui/card.jsx'; // Assuming this is your Card component
 import { Pagination, PaginationContent, PaginationItem, PaginationPrevious, PaginationNext, PaginationLink } from "../../../ui/pagination"; // Import shadcn/ui Pagination components
 import config from "@/config.jsx";
@@ -34,7 +35,7 @@ const Users = () => {
         }
 
         const data = await response.json();
-        setUsers(data);
+        setUsers(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error('Error fetching users:', error);
       } finally {

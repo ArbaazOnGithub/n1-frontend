@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { findServiceBySlug } from "../Components/ServiceData";
 import ServiceForm from "../Components/Forms/ServiceForm";
 import config from "@/config";
@@ -70,7 +71,14 @@ const ServiceDetailPage = () => {
           <h1 className="text-4xl md:text-5xl font-extrabold mb-3">{service.tagline}</h1>
           <p className="text-lg text-white/80 max-w-2xl">{service.description}</p>
           <button
-            onClick={() => setShowForm(true)}
+            onClick={() => {
+              if (!localStorage.getItem('token')) {
+                toast.error("Please login to apply");
+                navigate("/login");
+              } else {
+                setShowForm(true);
+              }
+            }}
             className="mt-8 bg-white text-slate-800 font-bold px-8 py-3 rounded-full hover:shadow-xl hover:-translate-y-0.5 transition-all"
           >
             Apply for {slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")} →
@@ -159,7 +167,14 @@ const ServiceDetailPage = () => {
           <h2 className="text-3xl font-extrabold mb-3">Ready to Get Started?</h2>
           <p className="text-white/80 mb-6">Fill out our quick form and we'll be in touch within 24 hours.</p>
           <button
-            onClick={() => setShowForm(true)}
+            onClick={() => {
+              if (!localStorage.getItem('token')) {
+                toast.error("Please login to apply");
+                navigate("/login");
+              } else {
+                setShowForm(true);
+              }
+            }}
             className="bg-white text-slate-800 font-bold px-10 py-3 rounded-full hover:shadow-xl hover:-translate-y-0.5 transition-all"
           >
             Apply Now
