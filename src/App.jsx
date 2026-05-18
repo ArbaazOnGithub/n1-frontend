@@ -42,8 +42,8 @@ function App() {
         <Suspense fallback={<SpinnerFallback />}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<SignUp />} />
+            <Route path="/login" element={<><Home /><Login /></>} />
+            <Route path="/register" element={<><Home /><SignUp /></>} />
             <Route path="/services/:slug" element={<ServiceDetailPage />} />
             <Route path="/my-orders" element={
               <ProtectedRoute role="ROLE_USER">

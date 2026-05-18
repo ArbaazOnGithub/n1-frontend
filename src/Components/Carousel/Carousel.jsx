@@ -216,8 +216,8 @@ const Carousel = () => {
 
       {/* Dynamic Service Form Modal */}
       {showForm && selectedService && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="relative bg-white p-0 rounded-lg shadow-lg mx-auto w-full max-w-lg sm:max-w-2xl">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
+          <div className="relative p-0 rounded-xl mx-auto w-full max-w-lg sm:max-w-2xl">
             {/* Close Button */}
             <button
               className="absolute rounded top-3 right-3 text-green-700 hover:text-red-500 bg-gray-100 hover:bg-red-200 w-10 h-10 flex items-center justify-center shadow-xl hover:shadow-2xl shadow-red-300 transition-all"

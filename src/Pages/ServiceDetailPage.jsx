@@ -184,8 +184,8 @@ const ServiceDetailPage = () => {
 
       {/* Service Form Modal */}
       {showForm && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50 p-4">
-          <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg">
+        <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
+          <div className="relative rounded-2xl w-full max-w-lg">
             <button
               onClick={() => setShowForm(false)}
               className="absolute top-3 right-3 w-8 h-8 rounded-full bg-slate-100 hover:bg-red-100 text-slate-500 hover:text-red-500 flex items-center justify-center transition font-bold"

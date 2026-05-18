@@ -50,21 +50,20 @@ const ServiceForm = ({ selectedService, fields, onClose }) => {
   };
 
   const showSubmissionMessage = (serviceName) => {
-    toast(
+    toast.success(
       <div className="text-center">
         <strong>Thank you for applying for {serviceName} service.</strong>
-        <p>Our team will soon contact you.</p>
-        <p>
+        <p className="text-sm mt-1">Our team will soon contact you.</p>
+        <p className="text-sm mt-1">
           If it is urgent, call:{" "}
-          <a href="tel:+919399285780" className="text-blue-500 underline">
+          <a href="tel:+919399285780" className="text-blue-500 underline font-semibold">
             +919399285780
           </a>
         </p>
       </div>,
       {
         position: "top-center",
-        autoClose: 2000,
-        className: "flex justify-center items-center fixed inset-0 bg-white shadow-lg p-6 rounded-lg",
+        autoClose: 3000,
       }
     );
   };
@@ -153,6 +152,11 @@ const ServiceForm = ({ selectedService, fields, onClose }) => {
       // Show success message
       showSubmissionMessage(serviceName);
       setFormData({});
+      
+      setTimeout(() => {
+        if (onClose) onClose();
+        navigate("/");
+      }, 3000);
     } catch (error) {
       console.error("Error submitting form:", error);
       if (!localStorage.getItem('token')) {
@@ -170,7 +174,7 @@ const ServiceForm = ({ selectedService, fields, onClose }) => {
 
 
   return (
-    <div className="select-none p-5 bg-white dark:bg-gray-800 rounded-lg shadow-lg w-full border dark:border-gray-700">
+    <div className="select-none p-6 bg-white/80 dark:bg-gray-900/50 backdrop-blur-xl rounded-xl shadow-2xl w-full border border-white/20 dark:border-gray-700/50">
 
 
       <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">{selectedService} Service</h2>
