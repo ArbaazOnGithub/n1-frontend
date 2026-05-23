@@ -767,3 +767,43 @@ body.dark-mode .text-amber-400 {
   color: #00FFA3 !important;
   text-shadow: 0 0 6px rgba(0, 255, 163, 0.35) !important;
 }
+
+/* ----------------------------------------------------------
+   18. SERVICE DETAIL PAGE OVERRIDES (Cyber Dark Mode)
+   ---------------------------------------------------------- */
+body.dark-mode .min-h-screen.bg-slate-50 {
+  background-color: transparent !important;
+}
+
+body.dark-mode .text-slate-800,
+body.dark-mode h2.text-slate-800,
+body.dark-mode h3.text-slate-800 {
+  color: #ffffff !important;
+}
+
+body.dark-mode .text-slate-700 {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+body.dark-mode .text-slate-600 {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+body.dark-mode .text-slate-500 {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+body.dark-mode .border-slate-100 {
+  border-color: rgba(41, 121, 255, 0.15) !important;
+}
+
+/* FAQ Button hover */
+body.dark-mode .glass-card button:hover {
+  background-color: rgba(41, 121, 255, 0.1) !important;
+  color: #00D2FF !important;
+}
+
+/* Star/Review formatting */
+body.dark-mode .text-slate-400 {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
