@@ -63,3 +63,47 @@ body.dark-mode .company-logo-item:hover {
   filter: drop-shadow(0 0 8px rgba(0, 210, 255, 0.6)) !important;
   transform: scale(1.05);
 }
+
+/* Custom typography logo styles */
+.company-custom-logo {
+  display: flex !important;
+  align-items: center !important;
+  line-height: 1 !important;
+}
+
+.company-logo-text-main {
+  color: #1f2937; /* Gray 800 */
+}
+
+.company-logo-text-accent {
+  color: #3b82f6; /* Blue 500 */
+}
+
+.company-logo-icon-blue {
+  color: #3b82f6;
+}
+
+.company-logo-icon-amber {
+  color: #f59e0b; /* Amber 500 */
+}
+
+.company-logo-text-purple {
+  color: #7c3aed; /* Purple 600 */
+}
+
+/* Dark Mode equivalents */
+body.dark-mode .company-logo-text-main {
+  color: #ffffff !important;
+}
+
+body.dark-mode .company-logo-text-accent {
+  color: #00D2FF !important; /* Cyan Glow */
+}
+
+body.dark-mode .company-logo-icon-blue {
+  color: #00D2FF !important;
+}
+
+body.dark-mode .company-logo-text-purple {
+  color: #FF33A6 !important; /* Cyber Pink */
+}

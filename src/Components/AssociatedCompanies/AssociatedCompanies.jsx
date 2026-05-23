@@ -9,15 +9,38 @@ import {
   FaSpotify,
   FaAws,
   FaPaypal,
-  FaStripe
+  FaStripe,
+  FaNetworkWired,
+  FaLightbulb
 } from 'react-icons/fa';
 
 const AssociatedCompanies = () => {
   const companies = [
     { name: 'Google', icon: <FaGoogle /> },
     { name: 'Amazon', icon: <FaAmazon /> },
+    { 
+      name: 'Turbonet', 
+      icon: (
+        <div className="flex items-center gap-1 font-bold tracking-tight text-3xl font-sans company-custom-logo">
+          <FaNetworkWired className="text-4xl company-logo-icon-blue" />
+          <span className="company-logo-text-main">turbo</span>
+          <span className="company-logo-text-accent">net</span>
+        </div>
+      ) 
+    },
     { name: 'Microsoft', icon: <FaMicrosoft /> },
     { name: 'Apple', icon: <FaApple /> },
+    { 
+      name: 'ideas 4 Transformations', 
+      icon: (
+        <div className="flex items-center gap-1.5 font-semibold tracking-tight text-2xl font-sans company-custom-logo">
+          <FaLightbulb className="text-3xl company-logo-icon-amber" />
+          <span className="company-logo-text-main">ideas</span>
+          <span className="company-logo-text-purple">4</span>
+          <span className="company-logo-text-accent font-bold">T</span>
+        </div>
+      ) 
+    },
     { name: 'Facebook', icon: <FaFacebook /> },
     { name: 'Spotify', icon: <FaSpotify /> },
     { name: 'AWS', icon: <FaAws /> },
