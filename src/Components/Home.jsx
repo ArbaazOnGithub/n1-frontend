@@ -12,6 +12,7 @@ import Achievment from './Achievments/Achievment';
 import ContactUs from './ContactUs/ContactUs';
 import ReviewSection from './ReviewSection';
 import ChatWidget from './ChatWidget';
+import AssociatedCompanies from './AssociatedCompanies/AssociatedCompanies';
 
 const Home = () => {
     useEffect(() => {
@@ -60,6 +61,8 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+
+            <AssociatedCompanies />
 
             <div className='carousel m-5' id='services'>
                 <Carousel sectionName="Services" CarouselData={CarouselData} />

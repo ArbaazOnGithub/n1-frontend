@@ -174,6 +174,27 @@ export const serviceDetails = {
     icon: "📞",
     color: "from-pink-500 to-fuchsia-500",
   },
+  "Other Services": {
+    slug: "other-services",
+    tagline: "Custom Solutions Tailored to You",
+    description:
+      "Need a custom solution that isn't listed? Tell us what you need! Our expert team is ready to handle your specialized technical and creative requirements. Enter your service request and we will contact you immediately.",
+    features: [
+      "Completely tailored to your specific requirements",
+      "Dedicated account managers & technical consultants",
+      "Flexible execution & budget options",
+      "Strict data confidentiality and NDA compliance",
+      "Rapid deployment & turnaround time",
+      "Transparent reporting & progress reviews",
+    ],
+    faqs: [
+      { q: "How do you handle custom services?", a: "Once you submit your requirements, we assign a dedicated specialist to consult with you and draft a custom plan." },
+      { q: "Is there any obligation after submitting?", a: "No, the consultation and request are completely free." },
+      { q: "What's the response time?", a: "Our team will contact you within 24 hours, usually much sooner." },
+    ],
+    icon: "⚙️",
+    color: "from-blue-600 to-violet-600",
+  },
 };
 
 // Helper to find service details by slug

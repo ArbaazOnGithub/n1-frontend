@@ -1,0 +1,65 @@
+.marquee-container {
+  width: 100%;
+}
+
+.marquee-content {
+  width: max-content;
+  /* Since we duplicate the items (total 2x items), 
+     translating by -50% perfectly loops the animation back to the start. */
+}
+
+.animate-marquee {
+  animation: scroll-marquee 25s linear infinite;
+}
+
+/* Pause the animation when hovering over the marquee container for a better UX */
+.marquee-container:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Light Theme Fade Masks (matching bg-slate-50 body background) */
+.marquee-fade-left {
+  background: linear-gradient(to right, #f8fafc, transparent) !important;
+}
+
+.marquee-fade-right {
+  background: linear-gradient(to left, #f8fafc, transparent) !important;
+}
+
+/* Dark Theme overrides using body.dark-mode (Cyber / Deep-Tech theme) */
+body.dark-mode .associated-companies-title {
+  color: #ffffff !important;
+  text-shadow: 0 0 15px rgba(0, 210, 255, 0.3) !important;
+}
+
+body.dark-mode .associated-companies-subtitle {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+body.dark-mode .marquee-fade-left {
+  background: linear-gradient(to right, #020617 20%, transparent) !important;
+}
+
+body.dark-mode .marquee-fade-right {
+  background: linear-gradient(to left, #020617 20%, transparent) !important;
+}
+
+body.dark-mode .company-logo-item {
+  color: rgba(255, 255, 255, 0.4) !important;
+  transition: color 0.3s ease, filter 0.3s ease, transform 0.3s ease !important;
+}
+
+body.dark-mode .company-logo-item:hover {
+  color: #00D2FF !important;
+  filter: drop-shadow(0 0 8px rgba(0, 210, 255, 0.6)) !important;
+  transform: scale(1.05);
+}

@@ -8,23 +8,27 @@ import config from "@/config";
 const ServiceDetailPage = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const service = findServiceBySlug(slug);
+  const staticService = findServiceBySlug(slug);
 
   const [showForm, setShowForm] = useState(false);
   const [backendService, setBackendService] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
   const [relatedReviews, setRelatedReviews] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!service) return;
     // Fetch backend service to get dynamic fields
     fetch(`${config.apiUrl}/api/services`)
       .then((r) => r.json())
       .then((services) => {
         const exactMatch = services.find((s) => s.slug === slug || s.name.toLowerCase().replace(/ /g, '-') === slug);
         setBackendService(exactMatch || null);
+        setLoading(false);
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
 
     // Fetch reviews for this service
     fetch(`${config.apiUrl}/api/reviews`)
@@ -36,7 +40,34 @@ const ServiceDetailPage = () => {
         setRelatedReviews(filtered.slice(0, 3));
       })
       .catch(console.error);
-  }, [slug, service]);
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center pt-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  // Fallback to dynamic service if not found in static list but exists in backend database
+  const service = staticService || (backendService ? {
+    slug: backendService.slug,
+    tagline: `Premium Custom ${backendService.name} Services`,
+    description: `We offer custom ${backendService.name} solutions tailored perfectly to your requirements. Enter your requirements below and our team will contact you shortly.`,
+    features: [
+      "Completely tailored to your specific requirements",
+      "Transparent reporting & regular progress reviews",
+      "Strict data confidentiality and NDA compliance",
+      "24/7 dedicated support and maintenance",
+    ],
+    faqs: [
+      { q: "How long does it take?", a: "Turnaround time depends entirely on your specific requirements. We will provide an estimate after consultation." },
+      { q: "How do I get started?", a: "Simply fill out the form below with your requirements, and our team will get in touch with you within 24 hours." },
+    ],
+    icon: "⚙️",
+    color: "from-blue-600 to-indigo-600",
+  } : null);
 
   if (!service) {
     return (
