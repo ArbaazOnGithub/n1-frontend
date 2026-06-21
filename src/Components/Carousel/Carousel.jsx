@@ -5,18 +5,14 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Card from '../Cards/Card';
-import ServiceForm from '../Forms/ServiceForm';
-import config from '@/config'; // Import your config file
+import config from '@/config';
 
 const Carousel = () => {
   const aliceCarouselRef = useRef(null);
-  const [showForm, setShowForm] = useState(false);
-  const [selectedService, setSelectedService] = useState(null);
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Fetch services from the API
   useEffect(() => {
     const fetchServices = async () => {
       try {
@@ -28,7 +24,7 @@ const Carousel = () => {
         }
 
         const data = await response.json();
-        setServices(data); // Set the fetched services
+        setServices(data);
       } catch (error) {
         console.error('Error fetching services:', error);
       } finally {
@@ -39,22 +35,24 @@ const Carousel = () => {
     fetchServices();
   }, []);
 
-  // Render carousel items
+  const handleServiceClick = (service) => {
+    if (!localStorage.getItem('token')) {
+      toast.error("Please login to apply");
+      navigate("/login");
+      return;
+    }
+    // Navigate to the service detail page and signal it to auto-open the form
+    const slug = service.slug || service.name.toLowerCase().replace(/ /g, '-');
+    navigate(`/services/${slug}`, { state: { openForm: true } });
+  };
+
   const items = services.map((service, index) => (
     <div key={index} className="flex justify-center">
       <Card
         title={service.name}
         description={service.description || "No description available."}
-        image={service.imageUrl} // Use the image URL from the API
-        onClick={() => {
-          if (!localStorage.getItem('token')) {
-            toast.error("Please login to apply");
-            navigate("/login");
-          } else {
-            setSelectedService(service); // Set the selected service
-            setShowForm(true); // Show the form
-          }
-        }}
+        image={service.imageUrl}
+        onClick={() => handleServiceClick(service)}
       />
     </div>
   ));
@@ -74,7 +72,7 @@ const Carousel = () => {
     <div className="relative md:top-10">
       <p className='select-none font-serif italic font-normal text-4xl text-center lg:text-5xl'>Services</p>
 
-      <div className={`${showForm ? 'blur-sm pointer-events-none' : ''}`}>
+      <div>
         <AliceCarousel
           mouseTracking
           items={items}
@@ -93,24 +91,6 @@ const Carousel = () => {
           <button className="custom-next-button" onClick={() => aliceCarouselRef.current.slideNext()}>&gt;</button>
         </div>
       </div>
-
-      {/* Dynamic Service Form Modal */}
-      {showForm && selectedService && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
-          <div className="relative p-0 rounded-xl mx-auto w-full max-w-lg sm:max-w-2xl">
-            {/* Close Button */}
-            <button
-              className="absolute rounded top-3 right-3 text-green-700 hover:text-red-500 bg-gray-100 hover:bg-red-200 w-10 h-10 flex items-center justify-center shadow-xl hover:shadow-2xl shadow-red-300 transition-all"
-              onClick={() => setShowForm(false)}
-            >
-              &times;
-            </button>
-
-            {/* Pass Selected Service to Form */}
-            <ServiceForm selectedService={selectedService.name} fields={selectedService.fields} />
-          </div>
-        </div>
-      )}
     </div>
   );
 };

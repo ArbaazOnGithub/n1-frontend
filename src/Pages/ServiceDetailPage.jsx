@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { findServiceBySlug } from "../Components/ServiceData";
 import ServiceForm from "../Components/Forms/ServiceForm";
@@ -8,9 +8,13 @@ import config from "@/config";
 const ServiceDetailPage = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const staticService = findServiceBySlug(slug);
 
-  const [showForm, setShowForm] = useState(false);
+  // Auto-open form if navigated here with openForm state (e.g. from service card click)
+  const [showForm, setShowForm] = useState(
+    location.state?.openForm === true && !!localStorage.getItem('token')
+  );
   const [backendService, setBackendService] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
   const [relatedReviews, setRelatedReviews] = useState([]);
@@ -239,15 +243,18 @@ const ServiceDetailPage = () => {
       {showForm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
           <div className="relative rounded-2xl w-full max-w-lg">
+            {/* z-10 ensures close button sits above ServiceForm's backdrop-blur stacking context */}
             <button
               onClick={() => setShowForm(false)}
-              className="absolute top-3 right-3 w-8 h-8 rounded-full bg-slate-100 hover:bg-red-100 text-slate-500 hover:text-red-500 flex items-center justify-center transition font-bold"
+              className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-slate-100 hover:bg-red-100 text-slate-500 hover:text-red-500 flex items-center justify-center transition font-bold shadow-md"
+              aria-label="Close form"
             >
               ✕
             </button>
             <ServiceForm
               selectedService={backendService?.name || slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}
               fields={backendService?.fields || []}
+              onClose={() => setShowForm(false)}
             />
           </div>
         </div>
