@@ -15,7 +15,7 @@ const NavBar = () => {
 
   // ── Dark Mode Toggle ────────────────────────────────────────────────────────
   const [isDark, setIsDark] = useState(
-    () => localStorage.getItem("n1-theme") === "dark"
+    () => localStorage.getItem("n1-theme") !== "light"
   );
 
   useEffect(() => {
