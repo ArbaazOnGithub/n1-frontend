@@ -4,7 +4,7 @@ import {
   FaNetworkWired,
   FaLightbulb,
   FaChartLine,
-  FaShieldAlt,
+  FaLeaf,
 } from 'react-icons/fa';
 
 const companies = [
@@ -50,6 +50,27 @@ const companies = [
         <span className="font-bold tracking-[0.2em] text-xs company-logo-text-santech-red uppercase leading-none mt-0.5">
           Digital Solutions
         </span>
+      </div>
+    ),
+  },
+  {
+    name: 'Galaxy Dry Fruits',
+    icon: (
+      <div className="flex flex-col items-center justify-center company-custom-logo gdf-badge">
+        <span className="font-bold tracking-[0.15em] text-[9px] company-logo-text-gdf-purple uppercase leading-none mb-0.5">
+          Galaxy Dry Fruits
+        </span>
+        <div className="flex items-center gap-0.5 leading-none">
+          <span className="font-black text-3xl company-logo-text-gdf-magenta leading-none">G</span>
+          <span className="font-black text-3xl company-logo-text-gdf-green leading-none">D</span>
+          <span className="font-black text-3xl company-logo-text-gdf-orange leading-none">F</span>
+        </div>
+        <div className="flex items-center gap-0.5 mt-0.5">
+          <FaLeaf className="text-xs company-logo-text-gdf-green" />
+          <span className="font-semibold tracking-[0.12em] text-[8px] company-logo-text-gdf-blue uppercase leading-none">
+            House of Quality
+          </span>
+        </div>
       </div>
     ),
   },

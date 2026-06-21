@@ -157,3 +157,56 @@ body.dark-mode .company-logo-text-santech-gray {
 body.dark-mode .company-logo-text-santech-red {
   color: #f87171 !important; /* Light Red / Rose */
 }
+
+/* --- Galaxy Dry Fruits (GDF) --- */
+.gdf-badge {
+  border: 2px solid #7c3aed;
+  border-radius: 50%;
+  padding: 6px 10px;
+  min-width: 80px;
+}
+
+.company-logo-text-gdf-purple {
+  color: #7c3aed; /* Violet / Purple */
+}
+
+.company-logo-text-gdf-magenta {
+  color: #d946ef; /* Fuchsia / Magenta — G */
+}
+
+.company-logo-text-gdf-green {
+  color: #16a34a; /* Green — D */
+}
+
+.company-logo-text-gdf-orange {
+  color: #f97316; /* Orange — F */
+}
+
+.company-logo-text-gdf-blue {
+  color: #2563eb; /* Blue — House of Quality */
+}
+
+/* Dark mode overrides */
+body.dark-mode .gdf-badge {
+  border-color: #a78bfa !important;
+}
+
+body.dark-mode .company-logo-text-gdf-purple {
+  color: #a78bfa !important;
+}
+
+body.dark-mode .company-logo-text-gdf-magenta {
+  color: #f0abfc !important;
+}
+
+body.dark-mode .company-logo-text-gdf-green {
+  color: #4ade80 !important;
+}
+
+body.dark-mode .company-logo-text-gdf-orange {
+  color: #fb923c !important;
+}
+
+body.dark-mode .company-logo-text-gdf-blue {
+  color: #60a5fa !important;
+}
