@@ -14,10 +14,23 @@ jobs:
       - name: Ping N1Solution Backend
         run: |
           echo "Pinging backend at $(date)..."
-          STATUS=$(curl -o /dev/null -s -w "%{http_code}" --max-time 60 https://n1-backend.onrender.com/)
+          # --max-time 120: wait up to 2 minutes (Render cold start can take 90s)
+          # --retry 3: retry up to 3 times if it fails
+          # --retry-delay 10: wait 10s between retries
+          # || true: never fail the workflow — this is a keep-alive, not a health check
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" \
+            --max-time 120 \
+            --retry 3 \
+            --retry-delay 10 \
+            --retry-all-errors \
+            https://n1-backend.onrender.com/ || echo "000")
           echo "Response status: $STATUS"
-          if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 500 ]; then
+          if [ "$STATUS" = "000" ]; then
+            echo "⏳ Backend is waking up (cold start) — it will be ready shortly."
+          elif [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 500 ]; then
             echo "✅ Backend is alive!"
           else
-            echo "⚠️ Backend returned unexpected status: $STATUS"
+            echo "⚠️ Backend returned status: $STATUS"
           fi
+          # Always exit 0 — this job should never block or fail the workflow
+          exit 0
