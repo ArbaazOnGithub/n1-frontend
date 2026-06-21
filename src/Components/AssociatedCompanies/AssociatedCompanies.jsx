@@ -74,6 +74,26 @@ const companies = [
       </div>
     ),
   },
+  {
+    name: 'AK Web Infotech IT Solution',
+    icon: (
+      <div className="flex flex-col items-center justify-center company-custom-logo">
+        <div className="flex items-end leading-none gap-0.5">
+          <span className="font-black text-3xl company-logo-text-ak-orange leading-none">A</span>
+          <span className="font-black text-3xl company-logo-text-ak-pink leading-none">K</span>
+        </div>
+        <div className="flex items-baseline leading-none mt-0.5">
+          <span className="font-black text-base company-logo-text-ak-pink">W</span>
+          <span className="font-bold text-sm company-logo-text-ak-white tracking-tight">EB</span>
+          <span className="font-black text-sm company-logo-text-ak-cyan tracking-tight">INFO</span>
+          <span className="font-black text-sm company-logo-text-ak-white tracking-tight">TECH</span>
+        </div>
+        <span className="font-semibold tracking-[0.2em] text-[8px] company-logo-text-ak-cyan uppercase leading-none mt-0.5">
+          IT Solution
+        </span>
+      </div>
+    ),
+  },
 ];
 
 const AssociatedCompanies = () => {
