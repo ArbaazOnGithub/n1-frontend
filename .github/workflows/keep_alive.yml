@@ -1,0 +1,23 @@
+name: Keep Render Backend Alive
+
+on:
+  schedule:
+    # Runs every 14 minutes — keeps Render free tier from spinning down (sleeps after 15 min idle)
+    - cron: "*/14 * * * *"
+  workflow_dispatch: # Allow manual trigger from GitHub Actions UI
+
+jobs:
+  ping:
+    name: Ping Backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping N1Solution Backend
+        run: |
+          echo "Pinging backend at $(date)..."
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" --max-time 60 https://n1-backend.onrender.com/)
+          echo "Response status: $STATUS"
+          if [ "$STATUS" -ge 200 ] && [ "$STATUS" -lt 500 ]; then
+            echo "✅ Backend is alive!"
+          else
+            echo "⚠️ Backend returned unexpected status: $STATUS"
+          fi
