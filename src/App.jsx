@@ -24,6 +24,7 @@ const AdminInquiries = lazy(() => import("./Components/ui/Admin/ContactMessages/
 const CustomerDashboard = lazy(() => import("./Pages/CustomerDashboard"));
 const ServiceDetailPage = lazy(() => import("./Pages/ServiceDetailPage"));
 const NotFoundPage = lazy(() => import("./Pages/NotFoundPage"));
+const AdminChatPanel = lazy(() => import("./Components/ui/Admin/Chat/AdminChatPanel"));
 
 const SpinnerFallback = () => (
   <div className="flex justify-center items-center h-screen w-full">
@@ -65,6 +66,7 @@ function App() {
               <Route path="services" element={<Services />} />
               <Route path="reviews" element={<AdminReviews />} />
               <Route path="contact-messages" element={<AdminInquiries />} />
+              <Route path="chat" element={<AdminChatPanel />} />
             </Route>
             {/* 404 Catch-All Route */}
             <Route path="*" element={<NotFoundPage />} />

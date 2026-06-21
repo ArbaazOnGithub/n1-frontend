@@ -2,51 +2,55 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import config from "@/config"; // Import your config file
+import config from "@/config";
+
+const WEBSITE_TYPE_INFO = (
+  <div>
+    <strong>Static Websites:</strong> Display fixed content — fast, cheap, ideal for portfolios & landing pages.
+    <br /><br />
+    <strong>Dynamic Websites:</strong> Fetch & update data in real time — ideal for e-commerce, dashboards & apps.
+  </div>
+);
 
 const ServiceForm = ({ selectedService, fields, onClose }) => {
   const [formData, setFormData] = useState({});
+  const [fieldErrors, setFieldErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error on change
+    if (fieldErrors[name]) {
+      setFieldErrors((prev) => ({ ...prev, [name]: "" }));
+    }
   };
 
-  const isFormValid = () => {
-    const requiredFields = fields?.map((field) => field.name) || [];
-    return requiredFields.every((field) => formData[field] && formData[field] !== "Select");
+  const validateField = (field, value) => {
+    if (!value || value === "Select") return `${field.label} is required.`;
+    if (field.type === "email" && !/\S+@\S+\.\S+/.test(value)) return "Enter a valid email address.";
+    if (field.type === "phone" && !/^\+?[\d\s\-()]{7,15}$/.test(value)) return "Enter a valid phone number.";
+    return "";
   };
+
+  const validateAll = () => {
+    const errors = {};
+    (fields || []).forEach((field) => {
+      const err = validateField(field, formData[field.name]);
+      if (err) errors[field.name] = err;
+    });
+    setFieldErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const isFormValid = () =>
+    (fields || []).every(
+      (field) => formData[field.name] && formData[field.name] !== "Select"
+    );
 
   const showDefinition = () => {
-    toast.info(
-      <div>
-         <strong>Static Websites:</strong>   {/* Display fixed content. */}
-        <a
-          href="https://example-static-site.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 underline"
-        >
-          Example
-        </a>
-        <br />
-        <br />
-         <strong>Dynamic Websites:</strong>   {/* Fetch and update data in real time. */}
-        <a
-          href="https://example-dynamic-site.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-500 underline"
-        >
-          Example
-        </a>
-      </div>,
-      { position: "top-center", autoClose: 4000 }
-    );
+    toast.info(WEBSITE_TYPE_INFO, { position: "top-center", autoClose: 6000 });
   };
 
   const showSubmissionMessage = (serviceName) => {
@@ -61,162 +65,150 @@ const ServiceForm = ({ selectedService, fields, onClose }) => {
           </a>
         </p>
       </div>,
-      {
-        position: "top-center",
-        autoClose: 3000,
-      }
+      { position: "top-center", autoClose: 3000 }
     );
   };
-//commented below code for user name and mobile number in the order table 
-  // const handleSubmit = async (serviceName) => {
-  //   setSubmitting(true);
-  //   try {
-  //     const token = localStorage.getItem('token'); // Get the JWT token from local storage
-  
-  //     if (!token) {
-  //       throw new Error('Please log in to submit the form.');
-  //     }
-  
-  //     // Convert form data to OrderDetail format
-  //     const orderDetails = Object.keys(formData).map((key) => ({
-  //       name: key,
-  //       value: formData[key],
-  //     }));
-  
-  //     // Send the order data to the backend
-  //     const response = await fetch(`${config.apiUrl}/api/orders`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "Authorization": `Bearer ${token}`, // Include the token in the request headers
-  //       },
-  //       body: JSON.stringify({
-  //         serviceType: serviceName, // Pass the service name
-  //         details: orderDetails, // Pass the form data as order details
-  //       }),
-  //     });
-  
-  //     if (!response.ok) {
-  //       const errorText = await response.text();
-  //       throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
-  //     }
-  
-  //     // Show success message
-  //     showSubmissionMessage(serviceName);
-  //     setFormData({});
-  //   } catch (error) {
-  //     console.error("Error submitting form:", error);
-  //     if (!localStorage.getItem('token')) {
-  //       toast.error("Please log in to submit the form.");
-  //     } else {
-  //       toast.error("Failed to submit the form. Please try again.");
-  //     }
-  //   } finally {
-  //     setSubmitting(false);
-  //   }
-  // };
 
   const handleSubmit = async (serviceName) => {
+    if (!validateAll()) return;
     setSubmitting(true);
     try {
-      const token = localStorage.getItem('token'); // Get the JWT token
-      
+      const token = localStorage.getItem("token");
+
       if (!token) {
-        throw new Error('Please log in to submit the form.');
+        toast.error("Please log in to submit the form.");
+        navigate("/login");
+        return;
       }
-      
-      // Convert form data to OrderDetail format
+
       const orderDetails = Object.keys(formData).map((key) => ({
         name: key,
         value: formData[key],
       }));
-      
-      // Send the order data to the backend
+
       const response = await fetch(`${config.apiUrl}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           serviceType: serviceName,
           details: orderDetails,
         }),
       });
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
       }
-      
-      // Show success message
+
       showSubmissionMessage(serviceName);
       setFormData({});
-      
+
+      // Navigate after the toast has had time to show
       setTimeout(() => {
         if (onClose) onClose();
         navigate("/");
-      }, 3000);
+      }, 3200);
     } catch (error) {
       console.error("Error submitting form:", error);
-      if (!localStorage.getItem('token')) {
-        toast.error("Please log in to submit the form.");
-        navigate("/login");
-      } else {
-        toast.error("Failed to submit the form. Please try again.");
-      }
+      toast.error("Failed to submit the form. Please try again.");
     } finally {
       setSubmitting(false);
     }
   };
 
-
-
-
   return (
     <div className="select-none p-6 bg-white/80 dark:bg-gray-900/50 backdrop-blur-xl rounded-xl shadow-2xl w-full border border-white/20 dark:border-gray-700/50">
+      <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">
+        {selectedService} Service
+      </h2>
 
+      {fields?.map((field) => {
+        const isWebsiteType = field.name === "websiteType" || field.label?.toLowerCase().includes("type");
+        return (
+          <div key={field.name} className="mt-4">
+            <div className="flex items-center gap-1.5 mb-1">
+              <label
+                htmlFor={`field-${field.name}`}
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
+                {field.label}
+              </label>
+              {isWebsiteType && (
+                <button
+                  type="button"
+                  onClick={showDefinition}
+                  className="text-blue-500 hover:text-blue-700 dark:text-blue-400 transition-colors"
+                  aria-label="What does this mean?"
+                  title="What's the difference?"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  </svg>
+                </button>
+              )}
+            </div>
 
-      <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">{selectedService} Service</h2>
+            {field.type === "select" ? (
+              <select
+                id={`field-${field.name}`}
+                name={field.name}
+                value={formData[field.name] || "Select"}
+                onChange={handleChange}
+                className={`w-full p-2.5 bg-gray-50 dark:bg-gray-700 border text-gray-900 dark:text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors ${
+                  fieldErrors[field.name]
+                    ? "border-red-500 dark:border-red-400"
+                    : "border-gray-300 dark:border-gray-600"
+                }`}
+              >
+                <option value="Select">Select</option>
+                {field.options.map((option) => (
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              <input
+                id={`field-${field.name}`}
+                type={field.type === "email" ? "email" : field.type === "phone" ? "tel" : "text"}
+                name={field.name}
+                value={formData[field.name] || ""}
+                onChange={handleChange}
+                className={`w-full p-2.5 bg-gray-50 dark:bg-gray-700 border text-gray-900 dark:text-white rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors ${
+                  fieldErrors[field.name]
+                    ? "border-red-500 dark:border-red-400"
+                    : "border-gray-300 dark:border-gray-600"
+                }`}
+                placeholder={`Enter ${field.label}`}
+              />
+            )}
 
-      {fields?.map((field) => (
-        <div key={field.name} className="mt-4">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">{field.label}</label>
-          {field.type === "select" ? (
-            <select
-              name={field.name}
-              value={formData[field.name] || "Select"}
-              onChange={handleChange}
-              className="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="Select">Select</option>
-              {field.options.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-          ) : (
-            <input
-              type="text"
-              name={field.name}
-              value={formData[field.name] || ""}
-              onChange={handleChange}
-              className="w-full p-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white rounded-lg focus:ring-blue-500 focus:border-blue-500"
-              placeholder={`Enter ${field.label}`}
-            />
-          )}
-        </div>
-      ))}
+            {/* Inline field error */}
+            {fieldErrors[field.name] && (
+              <p className="mt-1 text-xs text-red-500 dark:text-red-400 flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+                {fieldErrors[field.name]}
+              </p>
+            )}
+          </div>
+        );
+      })}
 
-      <div className="w-full flex justify-center mt-4">
+      <div className="w-full flex justify-center mt-6">
         <button
-          className={`w-36 flex justify-center items-center gap-2 p-2 rounded font-semibold shadow-md transition-all ${isFormValid() && !submitting
-              ? "bg-blue-500 text-white hover:bg-blue-600"
+          id="service-form-submit-btn"
+          className={`w-40 flex justify-center items-center gap-2 p-2.5 rounded-lg font-semibold shadow-md transition-all ${
+            isFormValid() && !submitting
+              ? "bg-blue-500 text-white hover:bg-blue-600 active:scale-95"
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
-            }`}
-          onClick={() => isFormValid() && handleSubmit(selectedService)}
-          disabled={!isFormValid() || submitting}
+          }`}
+          onClick={() => handleSubmit(selectedService)}
+          disabled={submitting}
         >
           {submitting ? (
             <>

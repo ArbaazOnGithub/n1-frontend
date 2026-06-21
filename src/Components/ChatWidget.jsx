@@ -1,7 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import AuthContext from "./AuthContext";
+import config from "@/config";
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { isLoggedIn } = useContext(AuthContext);
+  
   const [messages, setMessages] = useState([
     {
       from: "bot",
@@ -15,9 +19,61 @@ const ChatWidget = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Poll for messages if user is logged in
   useEffect(() => {
     scrollToBottom();
   }, [messages, isOpen]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setMessages([
+        {
+          from: "bot",
+          text: "👋 Hi there! Welcome to N1Solution. Ask me anything, or log in to chat with our live support team! 💡",
+        },
+      ]);
+      return;
+    }
+
+    if (!isOpen) return;
+
+    const fetchHistory = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        const res = await fetch(`${config.apiUrl}/api/chat/history`, {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const mapped = data.map(msg => ({
+            from: msg.senderEmail === "mohd.arbaaz.job@gmail.com" ? "bot" : "user",
+            text: msg.message
+          }));
+
+          if (mapped.length === 0) {
+            setMessages([
+              {
+                from: "bot",
+                text: "👋 Hi there! Welcome to N1Solution. How can we help you today?",
+              },
+            ]);
+          } else {
+            setMessages(mapped);
+          }
+        }
+      } catch (err) {
+        console.error("Error fetching chat history:", err);
+      }
+    };
+
+    fetchHistory();
+    const interval = setInterval(fetchHistory, 3000);
+    return () => clearInterval(interval);
+  }, [isOpen, isLoggedIn]);
 
   const autoReplies = {
     "web development":
@@ -49,26 +105,48 @@ const ChatWidget = () => {
       "Thanks for your message! Our team will get back to you shortly. For urgent queries, call us at +91 93992 85780.",
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     const trimmed = input.trim();
     if (!trimmed) return;
 
-    const userMessage = { from: "user", text: trimmed };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput("");
-
-    // Auto-reply logic
-    setTimeout(() => {
-      const lower = trimmed.toLowerCase();
-      let reply = autoReplies.default;
-      for (const key of Object.keys(autoReplies)) {
-        if (lower.includes(key)) {
-          reply = autoReplies[key];
-          break;
+    // Local echo for guest user or posting for auth user
+    if (isLoggedIn) {
+      try {
+        const token = localStorage.getItem("token");
+        const res = await fetch(`${config.apiUrl}/api/chat`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          },
+          body: JSON.stringify({ message: trimmed })
+        });
+        if (res.ok) {
+          setInput("");
+          const data = await res.json();
+          setMessages(prev => [...prev, { from: "user", text: data.message }]);
         }
+      } catch (err) {
+        console.error("Failed to send message:", err);
       }
-      setMessages((prev) => [...prev, { from: "bot", text: reply }]);
-    }, 700);
+    } else {
+      const userMessage = { from: "user", text: trimmed };
+      setMessages((prev) => [...prev, userMessage]);
+      setInput("");
+
+      // Auto-reply logic for guest user
+      setTimeout(() => {
+        const lower = trimmed.toLowerCase();
+        let reply = autoReplies.default;
+        for (const key of Object.keys(autoReplies)) {
+          if (lower.includes(key)) {
+            reply = autoReplies[key];
+            break;
+          }
+        }
+        setMessages((prev) => [...prev, { from: "bot", text: reply }]);
+      }, 700);
+    }
   };
 
   const handleKeyDown = (e) => {
@@ -89,7 +167,9 @@ const ChatWidget = () => {
               </div>
               <div>
                 <p className="font-semibold text-sm">N1Solution Support</p>
-                <p className="text-xs text-white/70">Typically replies instantly</p>
+                <p className="text-xs text-white/70">
+                  {isLoggedIn ? "Connected to Support" : "Typically replies instantly"}
+                </p>
               </div>
             </div>
             <button onClick={() => setIsOpen(false)} className="text-white/70 hover:text-white transition text-xl">✕</button>

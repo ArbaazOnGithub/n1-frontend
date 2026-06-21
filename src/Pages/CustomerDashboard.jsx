@@ -2,13 +2,18 @@ import React, { useState, useEffect, useContext } from "react";
 import { toast } from "react-toastify";
 import config from "@/config";
 import AuthContext from "../Components/AuthContext";
-
 import StatusTimeline from "../Components/StatusTimeline";
 
 const CustomerDashboard = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user, isLoggedIn } = useContext(AuthContext);
+
+  // Review modal state
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [selectedOrderForReview, setSelectedOrderForReview] = useState(null);
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState("");
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -36,6 +41,61 @@ const CustomerDashboard = () => {
       toast.error("Could not load your orders.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleCancelOrder = async (orderId) => {
+    if (!window.confirm("Are you sure you want to cancel this service request?")) return;
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${config.apiUrl}/api/orders/${orderId}/cancel`, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      if (res.ok) {
+        toast.success("Order cancelled successfully!");
+        setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: "cancelled" } : o));
+      } else {
+        const errorText = await res.text();
+        toast.error(`Cancellation failed: ${errorText}`);
+      }
+    } catch (err) {
+      toast.error(`Error: ${err.message}`);
+    }
+  };
+
+  const handleSubmitReview = async () => {
+    if (!comment.trim()) {
+      toast.error("Please enter a review comment.");
+      return;
+    }
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`${config.apiUrl}/api/reviews`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          rating,
+          comment,
+          serviceName: selectedOrderForReview.serviceType
+        })
+      });
+      if (res.ok) {
+        toast.success("Review submitted! It will appear on the site once approved by an admin.");
+        setShowReviewModal(false);
+        setComment("");
+        setRating(5);
+      } else {
+        const errText = await res.text();
+        toast.error(`Failed to submit review: ${errText}`);
+      }
+    } catch (err) {
+      toast.error(`Error: ${err.message}`);
     }
   };
 
@@ -100,11 +160,91 @@ const CustomerDashboard = () => {
                     </div>
                   )}
                 </div>
+
+                {/* Cancel Action */}
+                {order.status && order.status.toLowerCase() === "pending" && (
+                  <button
+                    onClick={() => handleCancelOrder(order.id)}
+                    className="mt-5 w-full py-2.5 bg-red-50 hover:bg-red-100 text-red-600 font-semibold rounded-xl border border-red-200 transition-colors"
+                  >
+                    Cancel Service Request
+                  </button>
+                )}
+
+                {/* Leave Review Action */}
+                {order.status && order.status.toLowerCase() === "completed" && (
+                  <button
+                    onClick={() => {
+                      setSelectedOrderForReview(order);
+                      setShowReviewModal(true);
+                    }}
+                    className="mt-5 w-full py-2.5 bg-green-50 hover:bg-green-100 text-green-600 font-semibold rounded-xl border border-green-200 transition-colors"
+                  >
+                    Submit a Review
+                  </button>
+                )}
               </div>
             ))
           )}
         </div>
       </div>
+
+      {/* Review Dialog/Modal */}
+      {showReviewModal && selectedOrderForReview && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+          <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden border border-slate-100 transform transition-all p-6">
+            <h3 className="text-2xl font-bold text-slate-800 mb-2">Write a Review</h3>
+            <p className="text-sm text-slate-500 mb-6">Share your feedback about our <strong>{selectedOrderForReview.serviceType}</strong> service.</p>
+
+            {/* Rating Selector */}
+            <div className="mb-5">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Rating</label>
+              <div className="flex gap-2 text-3xl">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    onClick={() => setRating(star)}
+                    className={`transition-transform hover:scale-110 ${star <= rating ? 'text-amber-400' : 'text-slate-200'}`}
+                  >
+                    ★
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Comment Area */}
+            <div className="mb-6">
+              <label className="block text-sm font-semibold text-slate-700 mb-2">Your Comments</label>
+              <textarea
+                className="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-blue-400 transition min-h-[100px] resize-none"
+                placeholder="How was your experience working with us?"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+            </div>
+
+            {/* Actions */}
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => {
+                  setShowReviewModal(false);
+                  setComment("");
+                  setRating(5);
+                }}
+                className="px-5 py-2.5 bg-slate-100 text-slate-600 rounded-xl font-semibold text-sm hover:bg-slate-200 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSubmitReview}
+                className="px-5 py-2.5 bg-blue-600 text-white rounded-xl font-semibold text-sm hover:bg-blue-700 transition"
+              >
+                Submit Review
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

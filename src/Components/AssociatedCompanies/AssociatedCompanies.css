@@ -9,11 +9,12 @@
 }
 
 .animate-marquee {
-  animation: scroll-marquee 25s linear infinite;
+  animation: scroll-marquee 30s linear infinite;
 }
 
 /* Pause the animation when hovering over the marquee container for a better UX */
-.marquee-container:hover .animate-marquee {
+.marquee-container:hover .animate-marquee,
+.marquee-container.paused .animate-marquee {
   animation-play-state: paused;
 }
 
@@ -71,6 +72,7 @@ body.dark-mode .company-logo-item:hover {
   line-height: 1 !important;
 }
 
+/* --- Turbonet / Existing --- */
 .company-logo-text-main {
   color: #1f2937; /* Gray 800 */
 }
@@ -91,7 +93,35 @@ body.dark-mode .company-logo-item:hover {
   color: #7c3aed; /* Purple 600 */
 }
 
-/* Dark Mode equivalents */
+/* --- BondsIndia --- */
+.company-logo-icon-orange {
+  color: #f97316; /* Orange 500 */
+}
+
+.company-logo-text-bondsorange {
+  color: #f97316; /* Orange 500 */
+  font-weight: 900;
+}
+
+.company-logo-text-bondsteal {
+  color: #0d9488; /* Teal 600 */
+  font-weight: 900;
+}
+
+/* --- Santech Digital Solutions --- */
+.company-logo-text-santech-gray {
+  color: #6b7280; /* Gray 500 */
+  letter-spacing: 0.2em;
+}
+
+.company-logo-text-santech-red {
+  color: #991b1b; /* Red 800 / Maroon */
+}
+
+/* =============================================
+   Dark Mode Overrides for all logo colors
+   ============================================= */
+
 body.dark-mode .company-logo-text-main {
   color: #ffffff !important;
 }
@@ -106,4 +136,24 @@ body.dark-mode .company-logo-icon-blue {
 
 body.dark-mode .company-logo-text-purple {
   color: #FF33A6 !important; /* Cyber Pink */
+}
+
+body.dark-mode .company-logo-icon-orange {
+  color: #fb923c !important; /* Lighter Orange */
+}
+
+body.dark-mode .company-logo-text-bondsorange {
+  color: #fb923c !important;
+}
+
+body.dark-mode .company-logo-text-bondsteal {
+  color: #2dd4bf !important; /* Lighter Teal */
+}
+
+body.dark-mode .company-logo-text-santech-gray {
+  color: #d1d5db !important; /* Light Gray */
+}
+
+body.dark-mode .company-logo-text-santech-red {
+  color: #f87171 !important; /* Light Red / Rose */
 }

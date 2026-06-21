@@ -1,53 +1,61 @@
 import React from 'react';
 import './AssociatedCompanies.css';
 import {
-  FaGoogle,
-  FaAmazon,
-  FaMicrosoft,
-  FaApple,
-  FaFacebook,
-  FaSpotify,
-  FaAws,
-  FaPaypal,
-  FaStripe,
   FaNetworkWired,
-  FaLightbulb
+  FaLightbulb,
+  FaChartLine,
+  FaShieldAlt,
 } from 'react-icons/fa';
 
-const AssociatedCompanies = () => {
-  const companies = [
-    { name: 'Google', icon: <FaGoogle /> },
-    { name: 'Amazon', icon: <FaAmazon /> },
-    { 
-      name: 'Turbonet', 
-      icon: (
-        <div className="flex items-center gap-1 font-bold tracking-tight text-3xl font-sans company-custom-logo">
-          <FaNetworkWired className="text-4xl company-logo-icon-blue" />
-          <span className="company-logo-text-main">turbo</span>
-          <span className="company-logo-text-accent">net</span>
-        </div>
-      ) 
-    },
-    { name: 'Microsoft', icon: <FaMicrosoft /> },
-    { name: 'Apple', icon: <FaApple /> },
-    { 
-      name: 'ideas 4 Transformations', 
-      icon: (
-        <div className="flex items-center gap-1.5 font-semibold tracking-tight text-2xl font-sans company-custom-logo">
-          <FaLightbulb className="text-3xl company-logo-icon-amber" />
-          <span className="company-logo-text-main">ideas</span>
-          <span className="company-logo-text-purple">4</span>
-          <span className="company-logo-text-accent font-bold">T</span>
-        </div>
-      ) 
-    },
-    { name: 'Facebook', icon: <FaFacebook /> },
-    { name: 'Spotify', icon: <FaSpotify /> },
-    { name: 'AWS', icon: <FaAws /> },
-    { name: 'PayPal', icon: <FaPaypal /> },
-    { name: 'Stripe', icon: <FaStripe /> }
-  ];
+const companies = [
+  {
+    name: 'Turbonet',
+    icon: (
+      <div className="flex items-center gap-1 font-bold tracking-tight text-3xl font-sans company-custom-logo">
+        <FaNetworkWired className="text-4xl company-logo-icon-blue" />
+        <span className="company-logo-text-main">turbo</span>
+        <span className="company-logo-text-accent">net</span>
+      </div>
+    ),
+  },
+  {
+    name: 'ideas 4 Transformations',
+    icon: (
+      <div className="flex items-center gap-1.5 font-semibold tracking-tight text-2xl font-sans company-custom-logo">
+        <FaLightbulb className="text-3xl company-logo-icon-amber" />
+        <span className="company-logo-text-main">ideas</span>
+        <span className="company-logo-text-purple">4</span>
+        <span className="company-logo-text-accent font-bold">T</span>
+      </div>
+    ),
+  },
+  {
+    name: 'BondsIndia',
+    icon: (
+      <div className="flex items-center gap-1.5 font-bold tracking-tight text-2xl font-sans company-custom-logo">
+        <FaChartLine className="text-3xl company-logo-icon-orange" />
+        <span className="company-logo-text-bondsorange">BONDS</span>
+        <span className="company-logo-text-bondsteal">INDIA</span>
+        <span className="company-logo-text-bondsteal text-xs align-top mt-0.5">®</span>
+      </div>
+    ),
+  },
+  {
+    name: 'Santech Digital Solutions',
+    icon: (
+      <div className="flex flex-col items-center justify-center company-custom-logo">
+        <span className="font-black tracking-widest text-2xl company-logo-text-santech-gray leading-none">
+          SANTECH
+        </span>
+        <span className="font-bold tracking-[0.2em] text-xs company-logo-text-santech-red uppercase leading-none mt-0.5">
+          Digital Solutions
+        </span>
+      </div>
+    ),
+  },
+];
 
+const AssociatedCompanies = () => {
   return (
     <div className="associated-companies-section py-16 bg-transparent overflow-hidden">
       <div className="container mx-auto px-4 mb-8">
@@ -71,6 +79,10 @@ const AssociatedCompanies = () => {
               key={index}
               className="company-logo-item mx-8 lg:mx-12 flex items-center justify-center text-gray-400 hover:text-blue-600 transition-colors duration-300 text-5xl lg:text-6xl"
               title={company.name}
+              aria-label={company.name}
+              tabIndex={index < companies.length ? 0 : -1}
+              onFocus={(e) => e.currentTarget.closest('.marquee-container').classList.add('paused')}
+              onBlur={(e) => e.currentTarget.closest('.marquee-container').classList.remove('paused')}
             >
               {company.icon}
             </div>

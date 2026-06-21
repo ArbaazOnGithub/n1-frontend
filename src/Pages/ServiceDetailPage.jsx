@@ -42,14 +42,6 @@ const ServiceDetailPage = () => {
       .catch(console.error);
   }, [slug]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center pt-20">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
-
   // Fallback to dynamic service if not found in static list but exists in backend database
   const service = staticService || (backendService ? {
     slug: backendService.slug,
@@ -61,13 +53,38 @@ const ServiceDetailPage = () => {
       "Strict data confidentiality and NDA compliance",
       "24/7 dedicated support and maintenance",
     ],
-    faqs: [
-      { q: "How long does it take?", a: "Turnaround time depends entirely on your specific requirements. We will provide an estimate after consultation." },
-      { q: "How do I get started?", a: "Simply fill out the form below with your requirements, and our team will get in touch with you within 24 hours." },
-    ],
+    faqs: (backendService.faqs && backendService.faqs.length > 0)
+      ? backendService.faqs.map(f => ({ q: f.question, a: f.answer }))
+      : [
+          { q: "How long does it take?", a: "Turnaround time depends entirely on your specific requirements. We will provide an estimate after consultation." },
+          { q: "How do I get started?", a: "Simply fill out the form below with your requirements, and our team will get in touch with you within 24 hours." },
+        ],
     icon: "⚙️",
     color: "from-blue-600 to-indigo-600",
   } : null);
+
+  // Dynamic SEO Tag Updates
+  useEffect(() => {
+    if (service) {
+      document.title = `${service.tagline} | N1Solution`;
+      
+      let metaDesc = document.querySelector('meta[name="description"]');
+      if (!metaDesc) {
+        metaDesc = document.createElement('meta');
+        metaDesc.setAttribute('name', 'description');
+        document.head.appendChild(metaDesc);
+      }
+      metaDesc.setAttribute('content', service.description || `Get premium services for ${service.tagline} at N1Solution.`);
+    }
+  }, [service]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center pt-20">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   if (!service) {
     return (
@@ -79,6 +96,11 @@ const ServiceDetailPage = () => {
       </div>
     );
   }
+
+  // Determine final FAQs array: backend dynamic FAQs take precedence
+  const finalFaqs = (backendService && backendService.faqs && backendService.faqs.length > 0)
+    ? backendService.faqs.map(f => ({ q: f.question, a: f.answer }))
+    : (service?.faqs || []);
 
   const StarDisplay = ({ value }) => (
     <span className="text-amber-400">
@@ -158,7 +180,7 @@ const ServiceDetailPage = () => {
         <section>
           <h2 className="text-2xl font-bold text-slate-800 mb-6">❓ Frequently Asked Questions</h2>
           <div className="space-y-3">
-            {service.faqs.map((faq, i) => (
+            {finalFaqs.map((faq, i) => (
               <div key={i} className="glass-card rounded-xl overflow-hidden">
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}

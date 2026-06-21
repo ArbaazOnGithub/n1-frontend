@@ -13,6 +13,7 @@ const Sidebar = () => {
     { to: '/admin/services', label: 'Services' },
     { to: '/admin/reviews', label: 'Reviews' },
     { to: '/admin/contact-messages', label: 'Inquiries' },
+    { to: '/admin/chat', label: 'Support Chat' },
   ];
 
   return (
