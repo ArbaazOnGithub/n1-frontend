@@ -8,25 +8,25 @@ import Card from '../Cards/Card';
 import config from '@/config';
 import { serviceDetails } from '../ServiceData';
 
-// Local image imports — these are bundled with the frontend, no backend needed.
 import webDevImg from '../../assets/Img/webdevlopment1.jpg';
 import seoImg from '../../assets/Img/SEO1.jpg';
 import googleMapsImg from '../../assets/Img/GoogleMyBusiness1.jpg';
 import webHostingImg from '../../assets/Img/webhosting1.jpg';
-import howtoapplyImg from '../../assets/Img/Howtoapply1.jpg';
 import otherServicesImg from '../../assets/Img/otherservices.png';
 import logoDesignImg from '../../assets/Img/logodesign1.jpg';
+import hero51Img from '../../assets/Img/Hero Section51.jpg';
+import hero61Img from '../../assets/Img/Hero Section61.jpg';
 
 // Map service names to their local images
 const SERVICE_IMAGES = {
   'Web Development': webDevImg,
   'SEO': seoImg,
   'Logo Design': logoDesignImg,
-  'Google Ads': howtoapplyImg,
+  'Google Ads': hero51Img,
   'Google Map Listing': googleMapsImg,
   'Web Hosting': webHostingImg,
-  'Data Entry': howtoapplyImg,
-  'Tele Calling': howtoapplyImg,
+  'Data Entry': hero61Img,
+  'Tele Calling': hero51Img,
   'Other Services': otherServicesImg,
 };
 
