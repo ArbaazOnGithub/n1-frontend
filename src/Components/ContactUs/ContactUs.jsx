@@ -65,8 +65,6 @@ export default function ContactUs() {
 
   return (
     <div className="select-none min-h-screen py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
-      <ToastContainer />
-
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-extrabold text-gray-900 dark:text-white sm:text-5xl">Get in Touch</h2>
