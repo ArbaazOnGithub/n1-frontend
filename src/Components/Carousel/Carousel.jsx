@@ -8,6 +8,28 @@ import Card from '../Cards/Card';
 import config from '@/config';
 import { serviceDetails } from '../ServiceData';
 
+// Local image imports — these are bundled with the frontend, no backend needed.
+import webDevImg from '../../assets/Img/webdevlopment1.jpg';
+import seoImg from '../../assets/Img/SEO1.jpg';
+import googleMapsImg from '../../assets/Img/GoogleMyBusiness1.jpg';
+import webHostingImg from '../../assets/Img/webhosting1.jpg';
+import howtoapplyImg from '../../assets/Img/Howtoapply1.jpg';
+import otherServicesImg from '../../assets/Img/otherservices.png';
+import logoDesignImg from '../../assets/Img/logodesign1.jpg';
+
+// Map service names to their local images
+const SERVICE_IMAGES = {
+  'Web Development': webDevImg,
+  'SEO': seoImg,
+  'Logo Design': logoDesignImg,
+  'Google Ads': howtoapplyImg,
+  'Google Map Listing': googleMapsImg,
+  'Web Hosting': webHostingImg,
+  'Data Entry': howtoapplyImg,
+  'Tele Calling': howtoapplyImg,
+  'Other Services': otherServicesImg,
+};
+
 // Build the initial static services list from ServiceData so the carousel
 // renders at 0ms with no dependency on the backend being awake.
 const STATIC_SERVICES = Object.entries(serviceDetails).map(([name, detail]) => ({
@@ -15,7 +37,7 @@ const STATIC_SERVICES = Object.entries(serviceDetails).map(([name, detail]) => (
   slug: detail.slug,
   description: detail.description,
   icon: detail.icon,
-  imageUrl: null,
+  imageUrl: SERVICE_IMAGES[name] || otherServicesImg,
 }));
 
 const Carousel = () => {
@@ -34,7 +56,7 @@ const Carousel = () => {
       })
       .then((data) => {
         if (!data || !Array.isArray(data)) return;
-        // Merge: keep static services, append backend-only services
+        // Merge: keep static services (with local images), append backend-only services
         const staticSlugs = new Set(STATIC_SERVICES.map((s) => s.slug));
         const backendOnly = data.filter(
           (s) => !staticSlugs.has(s.slug || s.name?.toLowerCase().replace(/ /g, '-'))

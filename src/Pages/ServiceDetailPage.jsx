@@ -238,7 +238,6 @@ const ServiceDetailPage = () => {
       {showForm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50 p-4">
           <div className="relative rounded-2xl w-full max-w-lg">
-            {/* z-10 ensures close button sits above ServiceForm's backdrop-blur stacking context */}
             <button
               onClick={() => setShowForm(false)}
               className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-slate-100 hover:bg-red-100 text-slate-500 hover:text-red-500 flex items-center justify-center transition font-bold shadow-md"
@@ -246,11 +245,23 @@ const ServiceDetailPage = () => {
             >
               ✕
             </button>
-            <ServiceForm
-              selectedService={backendService?.name || slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}
-              fields={backendService?.fields || []}
-              onClose={() => setShowForm(false)}
-            />
+            {/* Show a loader inside the modal while backend fields are loading.
+                Once backendService is populated, the real form renders. */}
+            {!backendService ? (
+              <div className="bg-white/80 backdrop-blur-xl rounded-xl shadow-2xl border border-white/20 p-10 flex flex-col items-center gap-4">
+                <div className="animate-spin rounded-full h-10 w-10 border-4 border-blue-100 border-t-blue-600" />
+                <p className="text-slate-600 font-medium text-sm text-center">
+                  Loading form fields…<br />
+                  <span className="text-slate-400 text-xs">Waking up the server, this may take up to 45 seconds.</span>
+                </p>
+              </div>
+            ) : (
+              <ServiceForm
+                selectedService={backendService.name || slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}
+                fields={backendService.fields || []}
+                onClose={() => setShowForm(false)}
+              />
+            )}
           </div>
         </div>
       )}
