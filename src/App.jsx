@@ -1,10 +1,11 @@
 // src/App.js
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import NavBar from "./Components/NavBar";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import { ToastContainer } from "react-toastify";
 import { AuthProvider } from "./Components/AuthContext"; // Import AuthProvider
+import config from "@/config";
 import "./App.css";
 import "./dark-theme.css";
 
@@ -33,6 +34,14 @@ const SpinnerFallback = () => (
 );
 
 function App() {
+  // Silent backend pre-warmer: fires once on page load to start waking up the
+  // Render free-tier JVM in the background. No UI impact whatsoever.
+  useEffect(() => {
+    fetch(`${config.apiUrl}/`, { method: "GET" }).catch(() => {
+      // Intentionally swallow errors — this is a best-effort warm-up ping only.
+    });
+  }, []);
+
   return (
     <AuthProvider>
       <Router>

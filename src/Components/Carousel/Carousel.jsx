@@ -6,33 +6,46 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Card from '../Cards/Card';
 import config from '@/config';
+import { serviceDetails } from '../ServiceData';
+
+// Build the initial static services list from ServiceData so the carousel
+// renders at 0ms with no dependency on the backend being awake.
+const STATIC_SERVICES = Object.entries(serviceDetails).map(([name, detail]) => ({
+  name,
+  slug: detail.slug,
+  description: detail.description,
+  icon: detail.icon,
+  imageUrl: null,
+}));
 
 const Carousel = () => {
   const aliceCarouselRef = useRef(null);
-  const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Start with static services — renders immediately, no spinner needed.
+  const [services, setServices] = useState(STATIC_SERVICES);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const response = await fetch(`${config.apiUrl}/api/services`);
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`HTTP error! Status: ${response.status}, Message: ${errorText}`);
+    // Silently fetch backend services in the background.
+    // If the backend is awake, merge any new services not in the static list.
+    fetch(`${config.apiUrl}/api/services`)
+      .then((r) => {
+        if (!r.ok) return;
+        return r.json();
+      })
+      .then((data) => {
+        if (!data || !Array.isArray(data)) return;
+        // Merge: keep static services, append backend-only services
+        const staticSlugs = new Set(STATIC_SERVICES.map((s) => s.slug));
+        const backendOnly = data.filter(
+          (s) => !staticSlugs.has(s.slug || s.name?.toLowerCase().replace(/ /g, '-'))
+        );
+        if (backendOnly.length > 0) {
+          setServices((prev) => [...prev, ...backendOnly]);
         }
-
-        const data = await response.json();
-        setServices(data);
-      } catch (error) {
-        console.error('Error fetching services:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchServices();
+      })
+      .catch(() => {
+        // Backend is asleep — static services are already displayed, nothing to do.
+      });
   }, []);
 
   const handleServiceClick = (service) => {
@@ -41,7 +54,6 @@ const Carousel = () => {
       navigate("/login");
       return;
     }
-    // Navigate to the service detail page and signal it to auto-open the form
     const slug = service.slug || service.name.toLowerCase().replace(/ /g, '-');
     navigate(`/services/${slug}`, { state: { openForm: true } });
   };
@@ -63,10 +75,6 @@ const Carousel = () => {
     992: { items: 3 },
     1200: { items: 4 },
   };
-
-  if (loading) {
-    return <div>Loading services...</div>;
-  }
 
   return (
     <div className="relative md:top-10">

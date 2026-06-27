@@ -18,32 +18,35 @@ const ServiceDetailPage = () => {
   const [backendService, setBackendService] = useState(null);
   const [openFaq, setOpenFaq] = useState(null);
   const [relatedReviews, setRelatedReviews] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // No blocking loading state — static content renders immediately.
 
   useEffect(() => {
-    // Fetch backend service to get dynamic fields
+    // Silently fetch backend service for dynamic form fields.
+    // The page has already rendered using static data — this just enriches the form.
     fetch(`${config.apiUrl}/api/services`)
-      .then((r) => r.json())
+      .then((r) => { if (r.ok) return r.json(); })
       .then((services) => {
-        const exactMatch = services.find((s) => s.slug === slug || s.name.toLowerCase().replace(/ /g, '-') === slug);
+        if (!services) return;
+        const exactMatch = services.find(
+          (s) => s.slug === slug || s.name.toLowerCase().replace(/ /g, '-') === slug
+        );
         setBackendService(exactMatch || null);
-        setLoading(false);
       })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
+      .catch(() => {
+        // Backend asleep — static content is already displayed, form uses defaults.
       });
 
-    // Fetch reviews for this service
+    // Silently fetch related reviews in the background.
     fetch(`${config.apiUrl}/api/reviews`)
-      .then((r) => r.json())
+      .then((r) => { if (r.ok) return r.json(); })
       .then((reviews) => {
+        if (!reviews) return;
         const filtered = reviews.filter((r) =>
           r.serviceName?.toLowerCase().includes(slug.replace(/-/g, " ").split(" ")[0].toLowerCase())
         );
         setRelatedReviews(filtered.slice(0, 3));
       })
-      .catch(console.error);
+      .catch(() => {});
   }, [slug]);
 
   // Fallback to dynamic service if not found in static list but exists in backend database
@@ -81,14 +84,6 @@ const ServiceDetailPage = () => {
       metaDesc.setAttribute('content', service.description || `Get premium services for ${service.tagline} at N1Solution.`);
     }
   }, [service]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center pt-20">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
 
   if (!service) {
     return (

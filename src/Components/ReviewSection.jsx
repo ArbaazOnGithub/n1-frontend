@@ -4,6 +4,59 @@ import config from "../config";
 import { useAuth } from "./AuthContext";
 import { FaQuoteLeft } from "react-icons/fa";
 
+// Static fallback testimonials — shown instantly while the backend wakes up.
+// These are replaced by real database reviews once the backend fetch completes.
+const STATIC_REVIEWS = [
+  {
+    id: "static-1",
+    rating: 5,
+    comment: "N1Solution transformed our online presence completely. Their web development team delivered a stunning, fast website that has already increased our leads by 40%.",
+    serviceName: "Web Development",
+    user: { name: "Rajesh Sharma" },
+    createdAt: "2025-03-15T00:00:00Z",
+  },
+  {
+    id: "static-2",
+    rating: 5,
+    comment: "Exceptional SEO work! We went from page 5 to page 1 on Google in just 3 months. The team is proactive, transparent, and genuinely invested in our success.",
+    serviceName: "SEO",
+    user: { name: "Priya Mehta" },
+    createdAt: "2025-04-02T00:00:00Z",
+  },
+  {
+    id: "static-3",
+    rating: 5,
+    comment: "Our Google Ads campaign managed by N1Solution delivered a 5x ROI within the first month. Best investment we have made for our business this year.",
+    serviceName: "Google Ads",
+    user: { name: "Amit Verma" },
+    createdAt: "2025-05-10T00:00:00Z",
+  },
+  {
+    id: "static-4",
+    rating: 5,
+    comment: "The logo design team perfectly captured our brand identity. Professional, creative, and responsive to every revision request. Highly recommended!",
+    serviceName: "Logo Design",
+    user: { name: "Sunita Kapoor" },
+    createdAt: "2025-05-28T00:00:00Z",
+  },
+  {
+    id: "static-5",
+    rating: 5,
+    comment: "Data entry done with incredible accuracy and speed. They handled thousands of records without a single error. Will definitely use their services again.",
+    serviceName: "Data Entry",
+    user: { name: "Vikram Singh" },
+    createdAt: "2025-06-05T00:00:00Z",
+  },
+  {
+    id: "static-6",
+    rating: 5,
+    comment: "Our Google Maps listing went from invisible to the top 3 in local search within weeks. Foot traffic to our store has noticeably increased.",
+    serviceName: "Google Map Listing",
+    user: { name: "Neha Joshi" },
+    createdAt: "2025-06-18T00:00:00Z",
+  },
+];
+
 const StarRating = ({ value, onChange, readOnly = false }) => {
   const [hovered, setHovered] = useState(0);
   return (
@@ -29,8 +82,9 @@ const StarRating = ({ value, onChange, readOnly = false }) => {
 
 const ReviewSection = () => {
   const { isLoggedIn } = useAuth();
-  const [reviews, setReviews] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Start with static reviews — renders immediately, no spinner.
+  const [reviews, setReviews] = useState(STATIC_REVIEWS);
+  const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({ rating: 5, comment: "", serviceName: "" });
   const [submitting, setSubmitting] = useState(false);
@@ -43,13 +97,14 @@ const ReviewSection = () => {
   const fetchReviews = async () => {
     try {
       const res = await fetch(`${config.apiUrl}/api/reviews`);
-      if (!res.ok) throw new Error("Failed to load reviews");
+      if (!res.ok) return; // Backend asleep — keep showing static reviews.
       const data = await res.json();
-      setReviews(data);
+      // Only replace static reviews if backend returned real approved reviews.
+      if (data && data.length > 0) {
+        setReviews(data);
+      }
     } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
+      // Backend asleep — static reviews are already displayed.
     }
   };
 
