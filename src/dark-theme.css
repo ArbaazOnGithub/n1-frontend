@@ -595,22 +595,25 @@ body.dark-mode footer a:hover svg {
 }
 
 /* ----------------------------------------------------------
-   13. CHAT WIDGET
+   13. CHAT WIDGET (user-side floating ChatWidget.jsx)
    ---------------------------------------------------------- */
-/* Window border */
-body.dark-mode .fixed.bottom-6.right-6 > div.bg-white {
-  background-color: #080f24 !important;
+
+/* Outer chat window */
+body.dark-mode .w-80.rounded-2xl.shadow-2xl.border.border-slate-200.bg-white,
+body.dark-mode .sm\:w-96.rounded-2xl.shadow-2xl.border.border-slate-200.bg-white,
+body.dark-mode .w-80.sm\:w-96.rounded-2xl.shadow-2xl {
+  background-color: #060d1f !important;
   border-color: rgba(41, 121, 255, 0.25) !important;
   box-shadow: 0 0 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(41, 121, 255, 0.1) !important;
 }
 
-/* Chat header gradient — keep it but make it more cyber */
+/* Chat header gradient — already looks good but reinforce */
 body.dark-mode .bg-gradient-to-r.from-blue-600.to-violet-600 {
   background: linear-gradient(135deg, #2979FF, #00D2FF) !important;
 }
 
-/* Messages area */
-body.dark-mode .flex-1.overflow-y-auto.bg-slate-50 {
+/* Messages area background */
+body.dark-mode .flex-1.overflow-y-auto.p-4.bg-slate-50 {
   background-color: #040c1e !important;
 }
 
@@ -621,26 +624,26 @@ body.dark-mode .bg-white.text-slate-700.border.border-slate-100 {
   border-color: rgba(41, 121, 255, 0.2) !important;
 }
 
-/* Input area */
-body.dark-mode .p-3.bg-white.border-t {
+/* Input area bar */
+body.dark-mode .p-3.bg-white.border-t.border-slate-100 {
   background-color: #060d1f !important;
   border-color: rgba(41, 121, 255, 0.15) !important;
 }
-body.dark-mode .p-3.bg-white.border-t input {
+body.dark-mode .p-3.bg-white.border-t.border-slate-100 input {
   background-color: #0a1628 !important;
   color: #ffffff !important;
   border-color: rgba(41, 121, 255, 0.25) !important;
 }
-body.dark-mode .p-3.bg-white.border-t input::placeholder {
+body.dark-mode .p-3.bg-white.border-t.border-slate-100 input::placeholder {
   color: rgba(255, 255, 255, 0.35) !important;
 }
-body.dark-mode .p-3.bg-white.border-t input:focus {
+body.dark-mode .p-3.bg-white.border-t.border-slate-100 input:focus {
   border-color: #2979FF !important;
   outline: none !important;
 }
 
 /* Send button */
-body.dark-mode .p-3.bg-white.border-t button {
+body.dark-mode .p-3.bg-white.border-t.border-slate-100 button {
   background: linear-gradient(135deg, #2979FF, #00D2FF) !important;
   box-shadow: 0 0 12px rgba(41, 121, 255, 0.4) !important;
 }
@@ -650,6 +653,7 @@ body.dark-mode .fixed.bottom-6.right-6 > button {
   background: linear-gradient(135deg, #2979FF, #00D2FF) !important;
   box-shadow: 0 0 24px rgba(0, 210, 255, 0.35), 0 4px 16px rgba(0, 0, 0, 0.5) !important;
 }
+
 
 /* ----------------------------------------------------------
    14. GENERAL WHITE BACKGROUNDS (catch-all for glass cards)
@@ -817,4 +821,198 @@ body.dark-mode .glass-card button:hover {
 /* Star/Review formatting */
 body.dark-mode .text-slate-400 {
   color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* ----------------------------------------------------------
+   19. ADMIN CHAT PANEL (AdminChatPanel.jsx)
+   ---------------------------------------------------------- */
+
+/* Outer container */
+body.dark-mode .flex.bg-white.rounded-2xl.shadow-xl {
+  background-color: #060d1f !important;
+  border-color: rgba(41, 121, 255, 0.2) !important;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(41, 121, 255, 0.08) !important;
+}
+
+/* Sidebar background */
+body.dark-mode .w-80.border-r.bg-slate-50 {
+  background-color: #040c1e !important;
+  border-color: rgba(41, 121, 255, 0.15) !important;
+}
+
+/* Sidebar header */
+body.dark-mode .w-80.border-r.bg-slate-50 > div.bg-white {
+  background-color: #060d1f !important;
+  border-color: rgba(41, 121, 255, 0.15) !important;
+}
+body.dark-mode .w-80.border-r.bg-slate-50 h3 {
+  color: #ffffff !important;
+}
+body.dark-mode .w-80.border-r.bg-slate-50 p {
+  color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* Partner list items */
+body.dark-mode .w-80.border-r.bg-slate-50 button.hover\:bg-slate-100 {
+  background-color: #040c1e !important;
+  border-color: rgba(41, 121, 255, 0.1) !important;
+}
+body.dark-mode .w-80.border-r.bg-slate-50 button.hover\:bg-slate-100:hover {
+  background-color: rgba(41, 121, 255, 0.08) !important;
+}
+
+/* Active/selected partner */
+body.dark-mode .w-80.border-r.bg-slate-50 button.bg-blue-50 {
+  background-color: rgba(41, 121, 255, 0.12) !important;
+  border-left-color: #00D2FF !important;
+}
+
+/* Partner name & sub-text */
+body.dark-mode .w-80.border-r.bg-slate-50 p.font-semibold {
+  color: #ffffff !important;
+}
+body.dark-mode .w-80.border-r.bg-slate-50 p.text-xs {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Empty / loading state in sidebar */
+body.dark-mode .w-80.border-r.bg-slate-50 .text-slate-400 {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Main chat window background */
+body.dark-mode .flex-1.flex.flex-col.bg-slate-100 {
+  background-color: #020a1a !important;
+}
+
+/* Chat header bar */
+body.dark-mode .p-4.bg-white.border-b.border-slate-200.flex.items-center {
+  background-color: #060d1f !important;
+  border-color: rgba(41, 121, 255, 0.15) !important;
+}
+body.dark-mode .p-4.bg-white.border-b.border-slate-200.flex.items-center h4 {
+  color: #ffffff !important;
+}
+
+/* Customer message bubble */
+body.dark-mode .bg-white.text-slate-800.border.border-slate-100.rounded-2xl {
+  background-color: #0a1628 !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(41, 121, 255, 0.2) !important;
+}
+
+/* Input bar at the bottom */
+body.dark-mode .p-4.bg-white.border-t.border-slate-200 {
+  background-color: #060d1f !important;
+  border-color: rgba(41, 121, 255, 0.15) !important;
+}
+body.dark-mode .p-4.bg-white.border-t.border-slate-200 input {
+  background-color: #0a1628 !important;
+  color: #ffffff !important;
+  border-color: rgba(41, 121, 255, 0.25) !important;
+}
+body.dark-mode .p-4.bg-white.border-t.border-slate-200 input::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+body.dark-mode .p-4.bg-white.border-t.border-slate-200 input:focus {
+  border-color: #2979FF !important;
+  box-shadow: 0 0 0 3px rgba(41, 121, 255, 0.15) !important;
+  outline: none !important;
+}
+
+/* Send button */
+body.dark-mode .p-4.bg-white.border-t.border-slate-200 button {
+  background: linear-gradient(135deg, #2979FF, #00D2FF) !important;
+  box-shadow: 0 0 14px rgba(41, 121, 255, 0.4) !important;
+  color: #ffffff !important;
+  opacity: 1;
+}
+body.dark-mode .p-4.bg-white.border-t.border-slate-200 button:disabled {
+  opacity: 0.4 !important;
+  box-shadow: none !important;
+}
+
+/* Empty "select a chat" placeholder */
+body.dark-mode .flex-1.flex.flex-col.bg-slate-100 .text-slate-400 {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
+/* ----------------------------------------------------------
+   20. SERVICE DETAIL PAGE — learn more / apply page
+   ---------------------------------------------------------- */
+
+/* Page wrapper */
+body.dark-mode .min-h-screen.bg-slate-50.pt-20 {
+  background-color: #020617 !important;
+}
+
+/* Hero banner CTA button (white bg, dark text on gradient banner) */
+body.dark-mode .bg-white.text-slate-800.font-bold.px-8.py-3,
+body.dark-mode .bg-white.text-slate-800.font-bold.px-10.py-3 {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  backdrop-filter: blur(8px) !important;
+}
+body.dark-mode .bg-white.text-slate-800.font-bold.px-8.py-3:hover,
+body.dark-mode .bg-white.text-slate-800.font-bold.px-10.py-3:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Form modal close button */
+body.dark-mode .bg-slate-100.hover\:bg-red-100.text-slate-500 {
+  background-color: #0a1628 !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(41, 121, 255, 0.2) !important;
+}
+body.dark-mode .bg-slate-100.hover\:bg-red-100.text-slate-500:hover {
+  background-color: rgba(220, 38, 38, 0.2) !important;
+  color: #ff6b6b !important;
+}
+
+/* Form loading panel (shown while backend wakes up) */
+body.dark-mode .bg-white\/80.backdrop-blur-xl.rounded-xl {
+  background-color: rgba(6, 13, 31, 0.95) !important;
+  border-color: rgba(41, 121, 255, 0.2) !important;
+}
+
+/* glass-card inner text — ensure all text is readable */
+body.dark-mode .glass-card p.text-slate-700,
+body.dark-mode .glass-card p,
+body.dark-mode .glass-card h3 {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* FAQ accordion buttons */
+body.dark-mode .glass-card button.font-semibold.text-slate-800 {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+body.dark-mode .glass-card button.font-semibold.text-slate-800:hover {
+  background-color: rgba(41, 121, 255, 0.08) !important;
+}
+
+/* FAQ divider */
+body.dark-mode .glass-card .border-t.border-slate-100 {
+  border-color: rgba(41, 121, 255, 0.12) !important;
+}
+body.dark-mode .glass-card .px-6.pb-4.text-slate-600 {
+  color: rgba(255, 255, 255, 0.65) !important;
+}
+
+/* How It Works step items */
+body.dark-mode .glass-card h3.font-bold.text-slate-800,
+body.dark-mode .glass-card .font-bold.text-slate-800 {
+  color: #ffffff !important;
+}
+body.dark-mode .glass-card p.text-slate-500 {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Related reviews mini-cards on detail page */
+body.dark-mode .glass-card p.text-slate-700.text-sm {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+body.dark-mode .glass-card p.text-xs.text-slate-400 {
+  color: rgba(255, 255, 255, 0.4) !important;
 }
